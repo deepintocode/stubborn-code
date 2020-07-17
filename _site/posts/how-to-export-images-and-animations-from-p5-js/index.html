@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            How to Export Images and Animations from p5.js</title>
+    </head>
+    <body>
+        <header
+  class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75"
+>
+  <div>
+    <a href="/" target="_self">
+      <p class="font-brand text-4xl">
+        Stubborn
+        <span class="text-brandLight">Code</span>
+      </p>
+    </a>
+  </div>
+  <div>
+    <a
+      href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA"
+      target="_blank"
+    >
+      <svg
+        class="w-12 h-12 fill-current text-brandLight"
+        viewbox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"
+        />
+      </svg>
+    </a>
+  </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-24 pt-12 m-auto">
+            <div class="text-4xl text-brandDark">How to Export Images and Animations from p5.js</div>
+            <div class="flex text-gray-600">
+                <span class="mx-1">02 July, 2020</span>
+                <span>·</span>
+                <span class="mx-1">7 mins to read</span>
+                
+                    <span>·</span>
+                    <span class="mx-1">13 mins
+                        to watch</span>
+                
+            </div>
+            <div class="mt-8 text-3xl italic text-brandLight">
+                
+                    <h3>tl;dw If you prefer a text version keep on reading!</h3>
+                
+            </div>
+            <div class="markdown">
+                <div id="bVlIFf-hffY" class="eleventy-plugin-youtube-embed"style="position:relative;width:100%;padding-top: 56.25%;"><iframe style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;" width="100%" height="100%" frameborder="0" src="https://www.youtube-nocookie.com/embed/bVlIFf-hffY" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p>This tutorial shows you how to export images/animations from p5.js</p>
+<p>We:</p>
+<ul>
+<li><a href="#use-save-function" target="_self">Use the p5.js save() function to export a still frame of our sketch</a></li>
+<li><a href="#use-ccapture-webm" target="_self">Use the ccapture.js library to export a webm file of our animation</a></li>
+<li><a href="#use-ccapture-sequence" target="_self">Use the ccapture.js library to export a sequence of png files of our animation</a></li>
+<li><a href="#install-ffmpeg" target="_self">Install ffmpeg and add it to our Windows path</a></li>
+<li><a href="#use-ffmpeg-webm" target="_self">Use ffmpeg to convert our webm file to an mp4 file</a></li>
+<li><a href="#use-ffmpeg-sequence" target="_self">Use ffmpeg to join our sequence of png images to an mp4 file</a></li>
+</ul>
+<p>p5.js is JavaScript library, which serves as a version of Processing for the web. This comes with the obvious advantage that it runs in the browser and makes it easy to share your creations with the world. However, it also makes it a bit trickier to work with exporting files compared to Processing.</p>
+<p>Since you want to work with files, you need to decide on two things depending on your use case. The size of your canvas and the frame rate if you're exporting an animation.</p>
+<p>Think of how you want to use your exported image and adjust the size of your canvas through the <a href="https://p5js.org/reference/#/p5/createCanvas"><code>createCanvas()</code></a> function.</p>
+<h3><span id="use-save-function">Use the p5.js save() function to export a still frame of our sketch</span></h3>
+<p>We can export a still frame using the <a href="https://p5js.org/reference/#/p5/save"><code>save()</code></a> function.</p>
+<p><em>It is important to note that if your draw() function is looping, the save() function will open a save dialog every frame, so make sure that if your sketch is looping, you stop it from looping first, for example with the <a href="https://p5js.org/reference/#/p5/noLoop"><code>noLoop()</code></a> function.</em></p>
+<p>The code for our sketch is:</p>
+<pre><code>const letters = [&quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;O&quot;];
+
+function setup() {
+  createCanvas(700, 700);
+  frameRate(5);
+}
+
+function draw() {
+  background(20);
+  for (let y = 0; y &lt;= height; y += 40) {
+    for (let x = 0; x &lt;= width; x += 40) {
+      push();
+      translate(x, y);
+      fill(random(255), random(255), random(255), random(255));
+      text(random(letters), 0, 0);
+      pop();
+    }
+  }
+  noLoop();
+  save(&quot;myImage.png&quot;);
+}
+</code></pre>
+<p>We are using the <code>noLoop()</code> function in order to stop our sketch from animating and the last line is saving our image. The <code>save()</code> function takes an optional parameter, which is the name of the file that we want to save, in this case 'myImage.png'. If we don't pass an argument, the file is saved as 'untitled.png'. When we save our file and run the HTML file that is loading our script, a file named 'myImage.png' is saved in our browser downloads folder.</p>
+<h3><span id="use-ccapture-webm">Use the CCapture.js library to export a webm file of our animation</span></h3>
+<p>p5.js can only save up to 15 frames with its <a href="https://p5js.org/reference/#/p5/saveFrames"><code>saveFrames()</code></a> function. In order to get all desired frames, we use an external canvas capture library, <a href="https://github.com/spite/ccapture.js/">ccapture.js</a>.</p>
+<p>We can either install the package through npm, or download the whole pack. Here, I downloaded a minified version of the library through its GitHub repo and included it in our HTML file in the usual way:</p>
+<pre><code>&lt;script src=&quot;CCapture.all.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>The code of our animation sketch is:</p>
+<pre><code>const letters = [&quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;O&quot;];
+
+const capturer = new CCapture({
+  framerate: 5,
+  format: &quot;webm&quot;,
+  name: &quot;movie&quot;,
+  quality: 100,
+  verbose: true,
+});
+
+let p5Canvas;
+
+function setup() {
+  p5Canvas = createCanvas(1080, 1080);
+  frameRate(5);
+}
+
+function draw() {
+  if (frameCount === 1) capturer.start();
+  background(20);
+  for (let y = 0; y &lt;= height; y += 40) {
+    for (let x = 0; x &lt;= width; x += 40) {
+      push();
+      translate(x, y);
+      fill(random(255), random(255), random(255), random(255));
+      text(random(letters), 0, 0);
+      pop();
+    }
+  }
+  capturer.capture(p5Canvas.canvas);
+  if (frameCount === 30) {
+    noLoop();
+    capturer.stop();
+    capturer.save();
+    }
+}
+</code></pre>
+<p>We are creating a CCapture instance using a number of options with:</p>
+<pre><code>const capturer = new CCapture({
+  framerate: 5,
+  format: &quot;webm&quot;,
+  name: &quot;movie&quot;,
+  quality: 100,
+  verbose: true,
+});
+</code></pre>
+<p>We have set a frame rate of 5 seconds per second, so it is important to match that in our capturer options with <code>framerate: 5</code>. We want to export a .webm video, which is an audiovisual media file format, primarily used on the web. <code>name: 'movie'</code> results to a file named 'movie.webm'. The quality option goes from 1 to 100, 1 being the worst and 100 being the best. Lastly, if we set the verbose option to true, we get information about the capture in our developer tools console.</p>
+<pre><code>let p5Canvas;
+p5Canvas = createCanvas(1080, 1080);
+</code></pre>
+<p>These lines save a reference to our canvas, which we need to pass our capturer later on.</p>
+<p>In order to start the capture we use the line below:</p>
+<pre><code>if (frameCount === 1) capturer.start();
+</code></pre>
+<p>We just want to execute the <code>start()</code> method of our capturer only at the beginning of our animation, which is done by checking the frame count of the animation.</p>
+<pre><code>capturer.capture(p5Canvas.canvas);
+</code></pre>
+<p>The <code>capture()</code> method of our capturer is capturing our canvas every frame. <em>Note that we need to pass the canvas attribute of our canvas reference that we saved earlier.</em></p>
+<pre><code>if (frameCount === 30) {
+    noLoop();
+    capturer.stop();
+    capturer.save();
+}
+</code></pre>
+<p>Lastly, since we check for a count of 30 frames, we save 6 seconds of our animation. 30 frames / 5 frames per second = 6 seconds. The <code>noLoop()</code> function stops looping, the <code>stop()</code> method stops the capture procedure and the <code>save()</code> method is saving the frames that our capturer has captured until now. If we now run our HTML file, after a few seconds we get a file named 'movie.webm' in our downloads folder.</p>
+<p>ccapture can also export files in gif, png, jpg and ffmpegserver formats.</p>
+<h3><span id="use-ccapture-sequence">Use the CCapture.js library to export a sequence of png files of our animation</span></h3>
+<p>It might be useful to have our frames in .png format, so in order to do that we need to make a few adjustments to the options we pass when you create our CCapture instance as below:</p>
+<pre><code>const capturer = new CCapture({
+  framerate: 5,
+  format: &quot;png&quot;,
+  name: &quot;zipped_movie&quot;,
+  quality: 100,
+  verbose: true,
+});
+</code></pre>
+<p>We change the format option to 'png' and the filename to 'zipped_movie'. If we run our file again, we get a file named 'zipped_movie.tar' that contains our images. A tar file is an archive file created by tar, a standard format in the unix/linux world. In order to extract the file you can either use a terminal or a GUI software, such as <a href="https://www.7-zip.org/">7-zip</a>.</p>
+<p>When you extract the files, you should see a sequence of images named '0000000.png', '0000001.png' and so on.</p>
+<p>In order to manipulate our previously exported .webm file, or our .png sequence we can use FFmpeg.</p>
+<p>FFmpeg is a console software that manipulates multimedia files. On Windows, you can run it using <a href="https://cmder.net/">cmder</a> or any other terminal emulator. On Mac or Linux, you can use the native terminal app.</p>
+<p>You can get a pre compiled FFmpeg build on its <a href="https://ffmpeg.org/">website</a>.</p>
+<p>After you've installed the appropriate build based on your operating system, you can also add it to your path.</p>
+<p>That simply means that you can run FFmpeg in your console from any directory.</p>
+<p>In order to do that in Windows 10, click on the start button and start typing 'environment', until 'Edit the system environment variables' appears. Click on that.</p>
+<p>When you see the below window, click on 'Environment Variables'.</p>
+<p><img src="img/environment1.png" alt="environment variables screenshot"></p>
+<p>Under system variables, select 'Path' and click on 'Edit'</p>
+<p><img src="img/environment2.png" alt="environment variables screenshot"></p>
+<p>Click on 'Browse', locate the folder where you installed FFmpeg in and select the 'bin' folder inside that, since that is where the FFmpeg executable resides in.</p>
+<p><img src="img/environment3.png" alt="environment variables screenshot"></p>
+<p>After you've added the FFmpeg folder, keep clicking ok until you get rid of all the windows that are open.</p>
+<p>You can now use FFmpeg from any directory in your terminal.</p>
+<p>This is not a terminal tutorial, so you should be already familiar with it, but if you just know how the <code>cd</code> command works that is used to change directories, you should probably be fine.</p>
+<p>You can now <code>cd</code> into the folder that contains our '.webm' file.</p>
+<h3><span id="use-ffmpeg-webm">Use ffmpeg to convert our webm file to an mp4 file</span></h3>
+<p>While '.webm' is a media format that modern browsers will have no problem reproducing, outdated media players are not going to be able to play the file, so if you want a file format that is more compatible, you can use FFmpeg to convert our '.webm' file to a more accessible '.mp4' file.</p>
+<p>In the folder that contains our '.webm' file, we run the following command.</p>
+<pre><code>ffmpeg -i movie.webm movie.mp4
+</code></pre>
+<p>We are just using an -i flag that we give a value of 'movie.webm' that is the name of our movie file and 'movie.mp4', which is the desired name of our output file. After a second or two, we get our '.mp4' file.</p>
+<h3><span id="#use-ffmpeg-sequence">Use ffmpeg to join our sequence of png images to an mp4 file</span></h3>
+<p>Joining a sequence is a bit more complicated. In the folder that contains our images we run:</p>
+<pre><code>ffmpeg -r 5 -i %07.png -pix_fmt yuv420p movie.mp4
+</code></pre>
+<p>FFmpeg can use global options, options for the input stream and options for the output stream, which go to the left of each stream.</p>
+<p>The -r flag denotes the frame rate of our input. In the case of the '.webm' file, FFmpeg could deduce our desired input frame rate since we had a video file. Now, since we are only providing images FFmpeg has no way of knowing the desired frame rate. The -i flag marks our input. '%07d.png' means that we have a sequence of png files that is using decimal numbers composed of seven digits padded with zeros. The -pix_fmt flag sets the pixel format to yuv420p instead of the default yuv444p, making our mp4 file readable by outdated media players.</p>
+<p>After we run the command we get our mp4 file that we can share with the rest of the world!</p>
+<p>And that's it!</p>
+<h2>You have now exported an image and a movie from p5.js!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>

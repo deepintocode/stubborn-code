@@ -1,0 +1,21 @@
+{
+  "name": "stubborn_code",
+  "version": "1.0.0",
+  "description": "Stubborn Code Blog",
+  "main": "index.js",
+  "scripts": {
+    "css": "postcss css/tailwind.css -o _site/css/tailwind.css",
+    "build": "(postcss css/tailwind.css -o _site/css/tailwind.css) && eleventy"
+  },
+  "author": "Teo",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^9.8.4",
+    "eleventy-plugin-youtube-embed": "^1.4.0",
+    "postcss-cli": "^7.1.1",
+    "tailwindcss": "^1.4.6"
+  },
+  "devDependencies": {
+    "postcss-nesting": "^7.0.1"
+  }
+}

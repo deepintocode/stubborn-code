@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+
+@font-face {
+  font-family: "Marske";
+  src: url("/css/fonts/Marske.woff2") format("woff2");
+  src: url("/css/fonts/Marske.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("/css/fonts/Nunito-Regular.woff2") format("woff2");
+  src: url("/css/fonts/Nunito-Regular.woff") format("woff");
+}
+
+.markdown {
+  @apply text-lg text-justify text-gray-900 leading-normal subpixel-antialiased;
+
+  & > * {
+    @apply mt-8;
+  }
+
+  & strong,
+  & strong a {
+    @apply font-bold;
+  }
+
+  & a {
+    @apply text-blue-700 font-bold;
+  }
+
+  & a:hover {
+    @apply text-blue-400;
+  }
+
+  & a:focus {
+    @apply outline-none bg-blue-200 shadow-outline;
+  }
+
+  & h1 {
+    @apply leading-tight text-4xl font-bold mb-12;
+  }
+
+  & h2 {
+    @apply leading-tight text-3xl font-bold mb-10;
+  }
+
+  & h3 {
+    @apply leading-tight text-2xl font-bold mb-8;
+  }
+
+  & img {
+    @apply m-auto;
+  }
+
+  & code {
+    @apply font-mono text-sm inline bg-gray-300 px-1;
+  }
+
+  & pre code {
+    @apply block bg-gray-900 text-lg text-gray-200 font-mono overflow-auto p-4 rounded;
+  }
+
+  & blockquote {
+    @apply border-l-4 border-gray-400 pl-4 italic;
+  }
+
+  & ul,
+  & ol {
+    @apply pl-5;
+    @screen sm {
+      @apply pl-10;
+    }
+  }
+
+  & ul {
+    @apply list-disc;
+  }
+
+  & ol {
+    @apply list-decimal;
+  }
+}
+
+@tailwind utilities;

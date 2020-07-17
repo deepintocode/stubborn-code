@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            Deploy an Express.js App to Digital Ocean</title>
+    </head>
+    <body>
+        <header
+  class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75"
+>
+  <div>
+    <a href="/" target="_self">
+      <p class="font-brand text-4xl">
+        Stubborn
+        <span class="text-brandLight">Code</span>
+      </p>
+    </a>
+  </div>
+  <div>
+    <a
+      href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA"
+      target="_blank"
+    >
+      <svg
+        class="w-12 h-12 fill-current text-brandLight"
+        viewbox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"
+        />
+      </svg>
+    </a>
+  </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-24 pt-12 m-auto">
+            <div class="text-4xl text-brandDark">Deploy an Express.js App to Digital Ocean</div>
+            <div class="flex text-gray-600">
+                <span class="mx-1">25 June, 2020</span>
+                <span>·</span>
+                <span class="mx-1">6 mins to read</span>
+                
+                    <span>·</span>
+                    <span class="mx-1">16 mins
+                        to watch</span>
+                
+            </div>
+            <div class="mt-8 text-3xl italic text-brandLight">
+                
+                    <h3>tl;dw If you prefer a text version keep on reading!</h3>
+                
+            </div>
+            <div class="markdown">
+                <div id="SffO8Q8gcf4" class="eleventy-plugin-youtube-embed"style="position:relative;width:100%;padding-top: 56.25%;"><iframe style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;" width="100%" height="100%" frameborder="0" src="https://www.youtube-nocookie.com/embed/SffO8Q8gcf4" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p>This tutorial shows you to code and deploy a simple Express.js app to Digital Ocean.</p>
+<p>We:</p>
+<ul>
+<li><a href="#install-node" target="_self">Install node.js</a></li>
+<li><a href="#setup-express" target="_self">Setup an Express.js app</a></li>
+<li><a href="#setup-pm2" target="_self">Setup PM2 process manager</a></li>
+<li><a href="#setup-ufw" target="_self">Setup ufw firewall on Ubuntu</a></li>
+<li><a href="#install-nginx" target="_self">Install and configure nginx</a></li>
+<li><a href="#setup-domain" target="_self">Setup a domain on Namecheap and Digital Ocean</a></li>
+<li><a href="#add-ssl" target="_self">Add an SSL certificate with Let's Encrypt</a></li>
+</ul>
+<p><em>Whenever you see the '$' symbol, we are running a terminal command.</em></p>
+<p>If you haven't setup a Digital Ocean yet, <a href="/posts/digital-ocean-basic-droplet-setup/">this tutorial</a> might be able to help you.</p>
+<p>We are going to install nvm, which is a node version manager that makes the installation and management of different Node versions a breeze. You can find nvm's github repo <a href="https://github.com/nvm-sh/nvm">here</a>.</p>
+<h3><span id="install-node">Install node.js<span></h3>
+<p>We connect to our droplet through SSH and use the following script to install nvm:</p>
+<pre><code>$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+</code></pre>
+<p>After this is installed, we can either close and reopen our terminal, or run the command that the nvm script gave us to run it immediately.</p>
+<p>We can now use:</p>
+<pre><code>$ nvm install node
+</code></pre>
+<p>to install the latest version of Node.</p>
+<p>If we now run:</p>
+<pre><code>$ node -v
+</code></pre>
+<p>we should see something like:</p>
+<pre><code>v14.4.0
+</code></pre>
+<p>If we get a version number, we have successfully installed Node.</p>
+<p>We can now write our basic Express app.</p>
+<h3><span id="setup-express">Setup an Express.js app</span></h3>
+<p>In our console we run the following commands to create a directory, cd into it, initialize a node project (the -y flag accepts everything and gives us the default npm project configuration) and install Express:</p>
+<pre><code>$ mkdir express_server
+$ cd express_server
+$ npm init -y
+$ npm install express
+</code></pre>
+<p>I'm using VS Code and I find it easier to connect through that using SSH in order to edit our project files.
+If you also want to do that, you can get VS Code <a href="https://code.visualstudio.com/">here</a> and the extension I use to connect remotely <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">here</a>.</p>
+<p>If you have installed VS Code and the remote SSH extension, you should now have a green icon in the bottom left corner of your screen as seen in this screenshot:</p>
+<p><img src="img/remote-1.png" alt="VS Code Screenshot"></p>
+<p>Clicking on that gives you the following options:</p>
+<p><img src="img/remote-2.png" alt="VS Code Screenshot"></p>
+<p>If you haven't used the extension before, you should probably configure it first, so click on Remote-SSH: Open Configuration File...</p>
+<p>You get a configuration file similar to the one below:</p>
+<pre><code># Read more about SSH config files: https://linux.die.net/man/5/ssh_config
+Host alias_name_of_your_choice
+    HostName IP_address_of_your_droplet
+    User username_of_your_droplet_user
+</code></pre>
+<p>Set the options accordingly and click on the green icon of the extension once again, this time selecting the Remote-SSH: Connect to Host... and clicking on the host name you chose earlier.</p>
+<p>After a few seconds you should be connected to your droplet. Open the express_server folder we created earlier, by clicking on the open folder button on the left sidebar of VS Code and create a new file named 'index.js' that has the following lines of code:</p>
+<pre><code>const express = require('express')
+const app = express()
+
+const port = 3000
+app.listen(port, () =&gt; console.log(`Express app listening on port ${port}`))
+
+app.get('/', (req, res) =&gt; {
+    // This tells Express that we want to send HTML code
+    // and not plain text
+    res.setHeader('content-type', 'text-html')
+    res.send('&lt;h2&gt;Hello from Stubborn Code&lt;/h2&gt;')
+})
+</code></pre>
+<p>Let's go through the lines of code that run our simple Express server.</p>
+<p>We need to require 'express' and run it to get an app instance:</p>
+<pre><code>const express = require('express')
+const app = express()
+</code></pre>
+<p>We are setting up a server on port 3000:</p>
+<pre><code>const port = 3000
+app.listen(port, () =&gt; console.log(`Express app listening on port ${port}`))
+</code></pre>
+<p>We are listening for GET requests on the root URL of our domain:</p>
+<pre><code>app.get('/', (req, res) =&gt; {
+    // This tells Express that we want to send HTML code
+    // and not plain text
+    res.setHeader('content-type', 'text-html')
+    res.send('&lt;h2&gt;Hello from Stubborn Code&lt;/h2&gt;')
+})
+</code></pre>
+<p>We can now run save our file and use our terminal to run our server with:</p>
+<pre><code>$ node index.js
+</code></pre>
+<p>But that is blocking our terminal, so we need to find a better way...</p>
+<h3><span id="setup-pm2">Setup PM2 process manager</span></h3>
+<p>Enter PM2.</p>
+<p>PM2 is a process manager for Node applications that can run our server for us.</p>
+<p>We install it by running:</p>
+<pre><code>$ npm install -g pm2
+</code></pre>
+<p>Where -g is a global flag that will install PM2 on our server globally.</p>
+<p>We can now run our server with:</p>
+<pre><code>$ pm2 start index.js
+</code></pre>
+<p>Using:</p>
+<pre><code>$ pm2 list
+</code></pre>
+<p>we get a list of our PM2 apps. Using the value that is found under name, we can manage our app. In this case our app is listed as index.</p>
+<p>We can use the following commands to manage our app:</p>
+<pre><code>$ pm2 stop index
+$ pm2 start index
+$ pm2 restart index
+</code></pre>
+<p>PM2 does not start apps automatically on system reboot. To make our app persistent we run the below command:</p>
+<pre><code>$ pm2 startup
+</code></pre>
+<p>This will give us a startup script that looks similar to the one below , which we can copy/paste and run in our terminal:</p>
+<pre><code>$ sudo env PATH=$PATH:/home/stubborn_code/.nvm/versions/node/v14.4.0/bin /home/stubborn_code/.nvm/versions/node/v14.4.0/lib/node_modules/pm2/bin/pm2 startup systemd -u stubborn_code --hp /home/stubborn_code
+</code></pre>
+<p>We also run:</p>
+<pre><code>$ pm2 save
+</code></pre>
+<p>to save our process list and our PM2 setup is done.</p>
+<p>With our app running on port 3000, a user would need to explicitly specify that they want to send a GET request to our server on port 3000. In case of HTTP requests, traditionally it is expected to communicate on ports 80 and 443.</p>
+<p>We can use nginx as a reverse proxy and forward requests from ports 80/443 to port 3000, our Express app port that we set before.</p>
+<h3><span id="setup-ufw">Setup ufw firewall on Ubuntu</span></h3>
+<p>On top of that, since we are running Ubuntu's ufw firewall, we need to allow incoming requests on ports 80 and 443.</p>
+<p>In order to allow incoming connections we run the following commands:</p>
+<pre><code>$ sudo ufw allow 80
+$ sudo ufw allow 443
+</code></pre>
+<h3><span id="install-nginx">Install and configure nginx</span></h3>
+<p>Next is nginx.</p>
+<p>We update Ubuntu's apt manager with:</p>
+<pre><code>$ sudo apt update
+</code></pre>
+<p>And install nginx with:</p>
+<pre><code>$ sudo apt install nginx
+</code></pre>
+<p>If the installation went fine, running:</p>
+<pre><code>$ systemctl status nginx
+</code></pre>
+<p>should show nginx as active.</p>
+<p>We are now going to edit nginx's default configuration file to set it up as a reverse proxy:</p>
+<pre><code>$ sudo nano /etc/nginx/sites-available/default
+</code></pre>
+<p>Since it's a new installation we only have one server block.</p>
+<p>Next to <code>server_name</code> we add our domain name, with and without www, which should look like:</p>
+<pre><code>server_name your_domain_name.com www.your_domain_name.com;
+</code></pre>
+<p>Under <code>location / {</code> we add:</p>
+<pre><code>proxy_pass http://localhost:3000;
+</code></pre>
+<p>Click ctrl-X to save and enter to exit the nano file editor.</p>
+<p>We run</p>
+<pre><code>$ sudo nginx -t
+</code></pre>
+<p>To test if the configuration file is ok and we restart our nginx service with:</p>
+<pre><code>$ sudo service nginx restart
+</code></pre>
+<h3><span id="setup-domain">Setup a domain on Namecheap and Digital Ocean</span></h3>
+<p>We can now go to your web registrar and enter Digital Ocean's name servers.</p>
+<p>I'm using NameCheap and I added the servers:</p>
+<pre><code>ns1.digitalocean.com
+ns2.digitalocean.com
+ns3.digitalocean.com
+</code></pre>
+<p>Under custom DNS in my domain's configuration.</p>
+<p><img src="img/namecheap.png" alt="NameCheap DNS Setup"></p>
+<p>If you just added the name servers, you should give it some time in order to propagate through the network. NameCheap stated that it can take up to 48 hours, but it actually took around 20 mins.</p>
+<p>You also need to add your domain name in Digital Ocean.</p>
+<p>That is done by clicking on 'Networking' on the left sidebar.</p>
+<p>There you add your domain name and add two A records, one with '@' as your hostname and one with 'www' as your hostname, both directing to your droplet. This ensures that both <code>your_domain_name.com</code> and <code>www.your_domain_name.com</code> are included.</p>
+<p>After this is done, your networking configuration should look similar to the one below.</p>
+<p><img src="img/digitalocean.png" alt="Digital Ocean Networking Tab"></p>
+<h3><span id="add-ssl">Add an SSL certificate with Let's Encrypt</span></h3>
+<p>We are now ready to add our SSL certificate from <a href="https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx">Certbot</a>.</p>
+<p>In our console we add the Cerbot PPA:</p>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install software-properties-common
+$ sudo add-apt-repository universe
+$ sudo add-apt-repository ppa:certbot/certbot
+$ sudo apt-get update
+</code></pre>
+<p>Install Certbot:</p>
+<pre><code>$ sudo apt-get install certbot python3-certbot-nginx
+</code></pre>
+<p>Get and install our certificate:</p>
+<pre><code>sudo certbot --nginx
+</code></pre>
+<p>The installer will give us a few options.</p>
+<p>We can activate HTTPS for both the non-www and the www names of our domain and redirect all HTTP traffic to HTTPS, removing HTTP access.</p>
+<p>And that's it!</p>
+<h2>You have now deployed a simple Node/Express.js App to a Digital Ocean droplet!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>

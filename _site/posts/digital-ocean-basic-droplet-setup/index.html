@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            Digital Ocean Basic Droplet Setup</title>
+    </head>
+    <body>
+        <header
+  class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75"
+>
+  <div>
+    <a href="/" target="_self">
+      <p class="font-brand text-4xl">
+        Stubborn
+        <span class="text-brandLight">Code</span>
+      </p>
+    </a>
+  </div>
+  <div>
+    <a
+      href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA"
+      target="_blank"
+    >
+      <svg
+        class="w-12 h-12 fill-current text-brandLight"
+        viewbox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"
+        />
+      </svg>
+    </a>
+  </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-24 pt-12 m-auto">
+            <div class="text-4xl text-brandDark">Digital Ocean Basic Droplet Setup</div>
+            <div class="flex text-gray-600">
+                <span class="mx-1">24 June, 2020</span>
+                <span>·</span>
+                <span class="mx-1">4 mins to read</span>
+                
+                    <span>·</span>
+                    <span class="mx-1">7 mins
+                        to watch</span>
+                
+            </div>
+            <div class="mt-8 text-3xl italic text-brandLight">
+                
+                    <h3>tl;dw If you prefer a text version keep on reading!</h3>
+                
+            </div>
+            <div class="markdown">
+                <div id="Um_vDg4pCVE" class="eleventy-plugin-youtube-embed"style="position:relative;width:100%;padding-top: 56.25%;"><iframe style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;" width="100%" height="100%" frameborder="0" src="https://www.youtube-nocookie.com/embed/Um_vDg4pCVE" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p>This tutorial guides you through a basic Ubuntu 18.0.4 droplet setup on Digital Ocean.</p>
+<p>We:</p>
+<ul>
+<li><a href="#create-droplet" target="_self">Create an Ubuntu 18.04 droplet on Digital Ocean</a></li>
+<li><a href="#connect-to-droplet" target="_self">Connect to the droplet as the root account through SSH</a></li>
+<li><a href="#add-new-user" target="_self">Add a new user</a></li>
+<li><a href="#add-user-to-sudoers" target="_self">Add the user to the group of sudoers</a></li>
+<li><a href="#create-keygen" target="_self">Create a local keygen</a></li>
+<li><a href="#copy-keygen" target="_self">Copy the keygen to our server</a></li>
+<li><a href="#disable-password" target="_self">Disable SSH password authentication and enable public key authentication</a></li>
+<li><a href="#enable-firewall" target="_self">Setup ufw firewall</a></li>
+</ul>
+<p>If you haven't already, create a droplet on <a href="https://www.digitalocean.com/">Digital Ocean</a></p>
+<p>In order to follow this tutorial, you need to select the Ubuntu distribution for your server.</p>
+<p>Every other option is up to you.</p>
+<p><span id="create-droplet">This tutorial went with the following options:</span></p>
+<ul>
+<li>Ubuntu 18.0.4 Distribution</li>
+<li>Standard Plan</li>
+<li>1GB / 1 CPU - 25GB SSD Disk - 1000GB transfer - $5/mo</li>
+<li>London datacenter</li>
+<li>Password Authentication <em>We disable password authentication and enable public key authentication later in the process</em> (You need to type in a root password that you can always change later)</li>
+</ul>
+<p>In order to connect to your droplet, you need a console emulator.</p>
+<p>I'm on Windows, so I use <a href="https://cmder.net/">cmder</a>, which is based on <a href="https://conemu.github.io/">ConEmu</a>.
+You can use one of these two if you are on Windows, or the native Terminal app if you're on a Mac or a Linux computer.</p>
+<p>Copy the IP address of your newly created droplet and open your console emulator of your choice.</p>
+<p><span id="connect-to-droplet">Using the command below connect to your server:</span></p>
+<pre><code>$ ssh root@ip_address_of_your_droplet_that_you_copied_from_digital_ocean
+</code></pre>
+<p>If it's your first time connecting to your droplet, you'll be faced with a message about the authenticity of the host. Select 'yes' to continue and enter the password you chose when you created the droplet.</p>
+<p>For security reasons, we are going to add a new user. The root user has many privileges, but with many privileges, come great responsibilities, so it's better to avoid using the root account on a daily basis.</p>
+<p><span id="add-new-user">We create a new user with the following command:</span></p>
+<pre><code>$ adduser username_of_your_choice
+</code></pre>
+<p>Enter a password and optionally add information for your new user.</p>
+<p>This tutorial created an account with the username stubborn_code, so the rest of the guide is going to use that.</p>
+<p>While, we don't want to use a root account as our main account, we sometimes need root privileges. To do that we can add this user to the group of sudoers. Users that belong to this group can execute commands that require root rights by using <code>sudo</code> in front of the command.</p>
+<p><span id="add-user-to-sudoers">Enter the following command to add our user to the group of sudoers:</span></p>
+<pre><code>$ usermod -aG sudo stubborn_code
+</code></pre>
+<p>The -a flag means append and the -G flag means group. Used together we append to a group, in this case the sudo group.</p>
+<p>We now want to add public key authentication in order to secure our server.</p>
+<p>To do that, you generate a public key on your <strong>local</strong> machine, which you then copy to your server.</p>
+<p>Your server holds the public keys of the devices that can connect to it, so other devices can't connect to it.
+<em>If you want to use additional devices to connect to your server, make sure that you repeat the procedure and copy their keys to your server.</em></p>
+<p><span id="create-keygen">The following command generates an SSH key pair:</span></p>
+<pre><code>$ ssh-keygen
+</code></pre>
+<p>On Windows, you will probably see something like this:</p>
+<pre><code>Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\windows_username/.ssh/id_rsa):
+</code></pre>
+<p>You can also choose to select a passphrase. In that case, you need to copy the key and you also need the passphrase every time you need to connect to your server.</p>
+<p>If you press enter, you will generate a private key, <code>id_rsa</code> and a public key <code>id_rsa.pub</code>, which you need to copy to your droplet in the .ssh directory of the local user.</p>
+<p><span id="copy-keygen">To copy your public key to the server, you can either:</span></p>
+<ul>
+<li>Use the ssh-copy-id command if it's available on your machine</li>
+<li>Copy the key manually</li>
+</ul>
+<p>The first way is simpler and you only need to type the following:</p>
+<pre><code>$ ssh-copy-id droplet_username@droplet_ip
+</code></pre>
+<p>If you need to manually copy the key, you can use the following command on your local machine:</p>
+<pre><code>$ cat ~/.ssh/id_rsa.pub | ssh droplet_username@droplet_ip &quot;cat &gt;&gt; ~/.ssh/authorized_keys&quot;
+</code></pre>
+<p>This will copy the contents from your public key on your local machine, connect to your server and paste the key in an 'authorized_keys' file in the .ssh folder of your droplet user.</p>
+<p>If the directory .ssh has not been created, which is more probable if you just created the droplet, you can use the command below that will create the directory before pasting the key:</p>
+<pre><code>$ cat ~/.ssh/id_rsa.pub | ssh user@123.45.56.78 &quot;mkdir ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys&quot;
+</code></pre>
+<p><span id="disable-password">We can disable the password authentication and enable public key authentication.</span></p>
+<p>To do that, we use the following command that gives us access to the sshd server configuration file:</p>
+<pre><code>$ sudo nano /etc/ssh/sshd_config
+</code></pre>
+<ul>
+<li>Change the value of <code>PermitRootLogin</code> to 'no' if you want to disable root login.</li>
+<li>Find the <code>PasswordAuthentication</code> option. If it is commented out with a '#' symbol in front of it, delete the '#' symbol to uncomment it. Change its value to 'no'.</li>
+<li>Find the <code>PubkeyAuthentication</code> option. Again, uncomment it if it's commented and make sure its value is set to yes.</li>
+</ul>
+<p>Click ctrl-X and select 'yes' to save the file.</p>
+<p>In order to test the login, without logging out open a new tab and try to connect to your account. If all went well, you will be able to connect to your server without a password.</p>
+<p><span id="enable-firewall">Last thing we need to do is enable the ufw firewall.</span></p>
+<p>On your server, enter the following command:</p>
+<pre><code>$ sudo ufw app list
+</code></pre>
+<p>You should see OpenSSH under Available applications.</p>
+<p>Run:</p>
+<pre><code>$ sudo ufw allow OpenSSH
+</code></pre>
+<p>to allow incoming SSH connections and</p>
+<pre><code>$ sudo ufw enable
+</code></pre>
+<p>to enable the firewall.</p>
+<p>And that's it!</p>
+<h2>You have now setup a basic droplet on Digital Ocean!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>

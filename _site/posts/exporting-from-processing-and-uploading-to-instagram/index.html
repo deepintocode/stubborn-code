@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            Exporting from Processing and Uploading to Instagram</title>
+    </head>
+    <body>
+        <header
+  class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75"
+>
+  <div>
+    <a href="/" target="_self">
+      <p class="font-brand text-4xl">
+        Stubborn
+        <span class="text-brandLight">Code</span>
+      </p>
+    </a>
+  </div>
+  <div>
+    <a
+      href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA"
+      target="_blank"
+    >
+      <svg
+        class="w-12 h-12 fill-current text-brandLight"
+        viewbox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"
+        />
+      </svg>
+    </a>
+  </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-24 pt-12 m-auto">
+            <div class="text-4xl text-brandDark">Exporting from Processing and Uploading to Instagram</div>
+            <div class="flex text-gray-600">
+                <span class="mx-1">28 June, 2020</span>
+                <span>·</span>
+                <span class="mx-1">7 mins to read</span>
+                
+                    <span>·</span>
+                    <span class="mx-1">9 mins
+                        to watch</span>
+                
+            </div>
+            <div class="mt-8 text-3xl italic text-brandLight">
+                
+                    <h3>tl;dw If you prefer a text version keep on reading!</h3>
+                
+            </div>
+            <div class="markdown">
+                <div id="Kd0Q1gxe-NM" class="eleventy-plugin-youtube-embed"style="position:relative;width:100%;padding-top: 56.25%;"><iframe style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;" width="100%" height="100%" frameborder="0" src="https://www.youtube-nocookie.com/embed/Kd0Q1gxe-NM" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p>This tutorial shows you how to export images/movies from Processing and upload them to Instagram.</p>
+<p>We:</p>
+<ul>
+<li><a href="#use-save-function" target="_self">Use the Processing save() function to export a still frame of our sketch</a></li>
+<li><a href="#use-saveFrame-function" target="_self">Use the Processing saveFrame() function to export a sequence of frames from our sketch</a></li>
+<li><a href="#use-movie-maker" target="_self">Use Processing's Movie Maker tool to join our sequence of frames into a movie</a></li>
+<li><a href="#use-ffmpeg" target="_self">Use ffmpeg to produce a better movie of our animation</a></li>
+<li><a href="#use-developer-tools" target="_self">Use the developer tools to upload our image to Instagram</a></li>
+</ul>
+<p>You should already know the basics of <a href="https://processing.org/">Processing</a>, as this is not a full Processing tutorial, but you don't need to be an expert.</p>
+<p>No matter how experienced you are, there is high chance that you want to share your creations with the world and this guide shows you exactly how to do that.</p>
+<p>Since you want to export your media, the size of your canvas is important. There is no golden rule that gives you the best size as this depends on your use case.</p>
+<p>In case of Instagram, you can go with the following formats for best results:</p>
+<ul>
+<li>Square(1:1) format --&gt; 1080px by 1080px</li>
+<li>Portrait(4:5) format --&gt; 1080px by 1350px</li>
+<li>Landscape(1.91:1) format --&gt; 1080px by 608px</li>
+</ul>
+<p>In any case, think how you want to use your exported graphics and adjust the <a href="https://processing.org/reference/size_.html"><code>size()</code></a> function accordingly.</p>
+<p>Another important decision you want to make when it comes to animations, regards the frame rate and we will see how that comes into play when we talk about how we export a movie later in this guide.</p>
+<h3><span id="use-save-function">Use the Processing save() function to export a still frame of our sketch</span></h3>
+<p>Exporting an image from Processing is straightforward and is done through its <a href="https://processing.org/reference/save_.html"><code>save()</code></a> function.</p>
+<p><em>It is important to note that you should save your project first, because the exported image is going to be saved in the folder that your saved project is in. Otherwise, the exported file is going to be saved in a temporary folder.</em></p>
+<p>The code for our sketch is:</p>
+<pre><code>void setup() {
+  size(700, 700);
+  noStroke();
+}
+
+void draw() {
+  background(255);
+  fill(0);
+  rect(0, height/2, width, height/2);
+  fill(255);
+  ellipse(width/2, height/2, 50, 50);
+  translate(width/2, height/2);
+
+  // Frame
+  rotate(radians(90));
+  for (int i = 0; i &lt; 11; i++) {
+    ellipse(i * 30, 0, 2 * i, 2 * i);
+  }
+
+  // Save a .png image of our sketch in
+  // the folder that the sketch was saved in
+  save(&quot;frame.png&quot;);
+}
+</code></pre>
+<p>The <code>save()</code> function takes as a parameter the name of the image you want to export. You can also use a relative path to your saved project folder such as 'folder/filename' or absolute path that starts with '/' and save it anywhere on your computer.</p>
+<p>If we run this sketch we get the image below:</p>
+<p><img src="img/frame.png" alt="exported image"></p>
+<p>and a file named 'frame.png' in the folder of our project. If we open the file, we will see the image mentioned above.</p>
+<p>Simple as that.</p>
+<h3><span id="use-saveFrame-function">Use the Processing saveFrame() function to export a sequence of frames from our sketch</span></h3>
+<p>Exporting an animation is not as straightforward.</p>
+<p>Processing has a <a href="https://processing.org/reference/saveFrame_.html"><code>saveFrame()</code></a> function. As the name implies, it saves a sequence of frames, so we need to find a way to combine them into a movie.</p>
+<p><em>Once again, make sure that you have already saved your project to have easier access to your saved frames.</em></p>
+<p>We are using the code below that gives us a short animation:</p>
+<pre><code>void setup() {
+  size(700, 700);
+  noStroke();
+}
+
+void draw() {
+  background(255);
+  fill(0);
+  rect(0, height/2, width, height/2);
+  fill(255);
+  ellipse(width/2, height/2, 50, 50);
+  translate(width/2, height/2);
+
+  // Animation
+  rotate(radians(frameCount));
+  for (int i = 0; i &lt; 11; i++) {
+    if ( frameCount % 360 &lt; 180) {
+      fill(255);
+    } else {
+      fill(0);
+    }
+    ellipse(i * 30, 0, 2 * i, 2 * i);
+  }
+  if(frameCount == 180){
+    noLoop();
+  }
+  saveFrame(&quot;frames/bw-###.png&quot;);
+}
+</code></pre>
+<p>It is important to understand how two variables that Processing provides us, <strong>frameRate</strong> and <strong>frameCount</strong>, work.</p>
+<p>The draw function is running in a loop. One loop cycle is equal to one frame. frameRate is fixed and has a default value of 60, so we have 60 frames and 60 executions of the draw function per second.</p>
+<p>frameCount is a variable that has an initial value of 1 and is increased by 1 every time the draw function is executed.</p>
+<p>Since,</p>
+<pre><code>rotate(radians(frameCount));
+</code></pre>
+<p>is using frameCount as a variable and</p>
+<pre><code>rotate(radians(360))
+</code></pre>
+<p>would give us a full rotation, with the default frameRate of 60 this would take 360/60 = 6 seconds.</p>
+<p>The lines:</p>
+<pre><code>if(frameCount == 180){
+    noLoop();
+  }
+</code></pre>
+<p>ensure that the loop is going to run until the frameCount is 180, which means 180/60 = 3 seconds.</p>
+<p>The <code>saveFrame()</code> function runs each time the <code>draw()</code> function is executed and saves a frame of our sketch's current state.</p>
+<p>Here:</p>
+<pre><code>saveFrame(&quot;frames/bw-###.png&quot;);
+</code></pre>
+<p>we are using a relative path, which will create a folder named 'frames' in our project folder that will contain 180 images, one for each frame of our animation. Every file will begin with 'bw-' as we specified and the hash symbols will be replaced by the current value of frameCount. The number of hash symbols will specify the maximum amount of files that can be saved, which in this case would be 999.</p>
+<p>If we run this sketch, we get the below Processing animation:</p>
+<video class="m-auto my-4" width="700" height="700" controls>
+  <source src="vid/out.mp4" type="video/mp4">
+</video>
+<p>And 180 images in our 'frames' folder.</p>
+<p>Now, we need to combine them into a movie.</p>
+<h3><span id="use-movie-maker">Use Processing's Movie Maker tool to join our sequence of frames into a movie</span></h3>
+<p>The first and easier way is to use the Movie Maker program, which can be found in the 'Tools' menu of Processing.</p>
+<p><img src="img/movie_maker.png" alt="movie maker screenshot"></p>
+<p>We just choose the folder that contains our exported frames, click on 'Create movie', choose our desired frame rate, which should be 60 if we want to match our previous sketch frame rate, give our movie a filename and we get a Quicktime .mov file.</p>
+<p>However, it is not my preferred way. It is not very flexible and gives us a file that has a few compatibility issues such as the native Windows player not being able to read it.</p>
+<h3><span id="use-ffmpeg">Use ffmpeg to produce a better movie of our animation</span></h3>
+<p>This is why I use a popular console software, <a href="https://ffmpeg.org/">FFmpeg</a>. FFmpeg is a free project that consists of libraries and programs for handling video, audio, and other multimedia files and streams.</p>
+<p>In order to use FFmpeg you need a terminal emulator. I'm on Windows and I'm using <a href="https://cmder.net/">cmder</a>. You can use that if you're on Windows, or use the native terminal app if you're on a Mac, or a Linux computer.</p>
+<p>FFmpeg only provides source code, but you can get pre compiled builds on its website.</p>
+<p>After you've installed the appropriate build based on your operating system, you can also add it to your path.</p>
+<p>That simply means that you can run FFmpeg in your console from any directory.</p>
+<p>In order to do that in Windows 10, click on the start button and start typing 'environment', until 'Edit the system environment variables' appears. Click on it when it does!</p>
+<p>When you see the below window, click on 'Environment Variables'.</p>
+<p><img src="img/environment1.png" alt="environment variables screenshot"></p>
+<p>Under system variables, select 'Path' and click on 'Edit'</p>
+<p><img src="img/environment2.png" alt="environment variables screenshot"></p>
+<p>Click on 'Browse', locate the folder where you installed FFmpeg in and select the 'bin' folder inside that, since that is where the FFmpeg executable resides in.</p>
+<p><img src="img/environment3.png" alt="environment variables screenshot"></p>
+<p>After you've added the FFmpeg folder, keep clicking ok until you get rid of all the windows that are open.</p>
+<p>You can now use FFmpeg from any directory in your terminal.</p>
+<p>Using the terminal of your choice, <code>cd</code> (change directory) into the 'frames' directory that we created earlier.</p>
+<p>The FFmpeg command we use is the one below:</p>
+<pre><code>$ ffmpeg -r 60 -i bw-%03d.png -c:v libx264 -pix_fmt yuv420p movie.mp4
+</code></pre>
+<p>While this is not a terminal tutorial, it helps to have a basic understanding of how commands usually work.</p>
+<p>We start with the name of the command that we want to use. Here being ffmpeg. The parts that start with a '-' symbol are called flags. Depending on the flag, they sometimes accept a value next to them. You can think of them as options that the command accepts.</p>
+<p>Specifically in the FFmpeg command, we have global options, input file name and input file options, output file name and output file options.</p>
+<p>The -i flag specifies the input file. Left to that we only use the -r flag with 60 as its value. This means that we want the frame rate of the input file to be 60, to match our Processing animation. The value 'bw-%03d.png' means that we have a sequence of files that begin with 'bw-' and end with '.png'. The middle '%03d' part means that our sequence of input files is using decimal numbers composed of three digits padded with zeros.</p>
+<p>movie.mp4 is the name of choice for our output file and between that and our input file name are the output options.</p>
+<p>The '-c:v' flag specifies the video codec of the output file, which we set as libx264. The 'pix_fmt' flag denotes the pixel format that we set to be 'yuv420p' in order to accommodate outdated media players.</p>
+<p>When we run the command we get the 'movie.mp4' file inside our 'frames' folder.</p>
+<h3><span id="use-developer-tools">Use developer tools to upload our image to Instagram</span></h3>
+<p>If we want to upload our wonderful image to Instagram, we can do so using a desktop computer or traditionally using a mobile phone. On a desktop computer, we can use any modern browser. The way we do that is access its developer tools, usually pressing F-12, toggling the device toolbar and selecting a mobile device. When you now visit <a href="https://instagram.com">Instagram</a>, it will seem like you are using a mobile device and you can upload your image as if you were doing it from a mobile phone.</p>
+<p>Unfortunately, this method does not work for videos, so we first need to transfer the video to a phone and upload it from there.</p>
+<p>And that's it!</p>
+<h2>You have now exported an image and a movie from Processing!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>
