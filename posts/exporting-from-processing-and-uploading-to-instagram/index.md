@@ -231,7 +231,7 @@ The '-c:v' flag specifies the video codec of the output file, which we set as li
 
 When we run the command we get the 'movie.mp4' file inside our 'frames' folder.
 
-### <span id="use-developer-tools">Use developer tools to upload our image to Instagram</span>
+### <span id="use-developer-tools">Use the developer tools to upload our image to Instagram</span>
 
 If we want to upload our wonderful image to Instagram, we can do so using a desktop computer or traditionally using a mobile phone. On a desktop computer, we can use any modern browser. The way we do that is access its developer tools, usually pressing F-12, toggling the device toolbar and selecting a mobile device. When you now visit [Instagram](https://instagram.com), it will seem like you are using a mobile device and you can upload your image as if you were doing it from a mobile phone.
 
