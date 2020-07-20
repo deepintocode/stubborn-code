@@ -4,10 +4,13 @@ module.exports = {
   purge: [],
   theme: {
     extend: {
+      screens: {
+        xs: "480px",
+        ...defaultTheme.screens,
+      },
       fontFamily: {
         sans: ["Nunito", ...defaultTheme.fontFamily.sans],
         brand: "Marske",
-        code: "Fira Code",
       },
       colors: {
         brandLight: "#a70c3d",

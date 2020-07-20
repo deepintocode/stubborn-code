@@ -8,21 +8,30 @@ pagination:
 ---
 
 {%- for post in posts -%}
-<h1 class="text-4xl text-brandDark">
-  <a href="{{ post.url }}">{{ post.data.title }}</a>
-</h1>
-<p class="flex items-center text-gray-600 -mt-2">
-  <span class="mx-1">{{ post.date | date: "%d %B, %Y" }}</span>
-  <span>·</span>
-  <span class="mx-1">{{ post.templateContent | wordCount }}</span>
-  {% if post.data.videoLink %}
-  <span>·</span>
-  <span class="mx-1">{{ post.data.videoDuration }} to watch</span>
-  {% endif %}
-</p>
-<div class="mb-12 mt-2 text-xl text-justify">{{ post.data.description }}</div>
-{%- endfor -%} {% if pagination.href.previous %}
-<a href="{{ pagination.href.previous }}">Previous</a>
-{% endif %} {% if pagination.href.next %}
-<a href="{{ pagination.href.next }}">Next</a>
+    <h1 class="text-2xl sm:text-3xl text-brandDark text-center sm:text-left leading-tight sm:leading-normal">
+        <a href="{{ post.url }}">{{ post.data.title }}</a>
+    </h1>
+    <div class="flex flex-col sm:flex-row items-center text-sm sm:text-base text-gray-600 sm:-mt-2">
+        <div>
+            <span class="mx-1">
+                <span class="sm:hidden">Posted on</span>
+                {{ post.date | date: "%d %B, %Y" }}</span>
+            <span class="hidden sm:inline">·</span>
+        </div>
+        <div>
+            <span class="mx-1">{{ post.templateContent | wordCount }}</span>
+            {% if post.data.videoLink %}
+                <span>·</span>
+                <span class="mx-1">{{ post.data.videoDuration }}
+                    to watch</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mb-6 sm:mb-12 sm:mt-2 text-base sm:text-xl text-justify leading-snug sm:leading-normal">{{ post.data.description }}</div>
+{%- endfor -%}
+{% if pagination.href.previous %}
+    <a href="{{ pagination.href.previous }}">Previous</a>
+{% endif %}
+{% if pagination.href.next %}
+    <a href="{{ pagination.href.next }}">Next</a>
 {% endif %}
