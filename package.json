@@ -10,6 +10,7 @@
   "author": "Teo",
   "license": "ISC",
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
     "autoprefixer": "^9.8.4",
     "eleventy-plugin-youtube-embed": "^1.4.0",
     "postcss-cli": "^7.1.1",
