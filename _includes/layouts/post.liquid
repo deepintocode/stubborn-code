@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8"/>
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="{{ title }}" name="Description">
         <base target="_blank"/>
         <link href="/favicon.png" rel="icon"/>
         <link href="/css/tailwind.css" rel="stylesheet"/>
@@ -14,7 +15,7 @@
         {% include _header.html %}
         <div class="container px-6 sm:px-12 lg:px-48 pb-12 sm:pb-20 pt-4 sm:pt-8 leading-tight sm:leading-normal text-center sm:text-left m-auto">
             <div class="text-3xl sm:text-4xl text-brandDark">{{ title }}</div>
-            <div class="flex flex-col xs:flex-row justify-center sm:justify-start text-gray-600">
+            <div class="flex flex-col xs:flex-row justify-center sm:justify-start text-gray-700">
                 <span class="mx-1">
                     <span class="inline xs:hidden">Posted on</span>
                     {{ date | date: "%d %B, %Y" }}</span>
