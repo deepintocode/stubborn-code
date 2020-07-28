@@ -20,7 +20,7 @@ We:
 - <a href="#setup-domain" target="_self">Setup a domain on Namecheap and Digital Ocean</a>
 - <a href="#add-ssl" target="_self">Add an SSL certificate with Let's Encrypt</a>
 
-_Whenever you see the '\$' symbol, we are running a terminal command._
+_Whenever you see the '\$' symbol in front of a command, it's a terminal command._
 
 If you haven't setup a Digital Ocean yet, [this tutorial](/posts/digital-ocean-basic-droplet-setup/) might be able to help you.
 

@@ -1,5 +1,4 @@
 @tailwind base;
-@tailwind components;
 
 @font-face {
   font-family: "Marske";
@@ -103,4 +102,6 @@
     }
   }
 }
+
+@tailwind components;
 @tailwind utilities;

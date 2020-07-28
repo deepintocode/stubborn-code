@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="Build a Blog with Eleventy and Tailwind CSS - Part 1 - Installation" name="Description">
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            Build a Blog with Eleventy and Tailwind CSS - Part 1 - Installation</title>
+    </head>
+    <body>
+        <header class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75">
+    <div>
+        <a href="/" target="_self">
+            <p class="font-brand text-3xl sm:text-4xl">
+                Stubborn
+                <span class="text-brandLight">Code</span>
+            </p>
+        </a>
+    </div>
+    <div>
+        <a aria-label="Find me on YouTube" href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA" rel="noopener" target="_blank">
+            <svg class="w-12 h-12 fill-current text-brandLight" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-12 sm:pb-20 pt-4 sm:pt-8 leading-tight sm:leading-normal text-center sm:text-left m-auto">
+            <div class="text-3xl sm:text-4xl text-brandDark">Build a Blog with Eleventy and Tailwind CSS - Part 1 - Installation</div>
+            <div class="flex flex-col xs:flex-row justify-center sm:justify-start text-gray-700">
+                <span class="mx-1">
+                    <span class="inline xs:hidden">Posted on</span>
+                    27 July, 2020</span>
+                <span class="hidden xs:block">·</span>
+                <span class="mx-1">4 mins to read</span>
+                
+                    <span class="hidden xs:block">·</span>
+                    <span class="mx-1">9 mins
+                        to watch</span>
+                
+            </div>
+            <div class="mt-4 sm:mt-8 text-2xl sm:text-3xl italic text-brandLight">
+                
+                    <h3>tl;dw If you prefer a text version keep on reading!</h3>
+                
+            </div>
+            <div class="markdown">
+                <div id="J20id5ToeLg" class="eleventy-plugin-youtube-embed"style="position:relative;width:100%;padding-top: 56.25%;"><iframe style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;" width="100%" height="100%" frameborder="0" src="https://www.youtube-nocookie.com/embed/J20id5ToeLg" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p>This series of posts shows you how I created the blog for stubborncode.com using Eleventy and Tailwind CSS. Its aim is to help you create and style your own static sites.</p>
+<p>This first tutorial talks a bit about Eleventy and Tailwind CSS. What they are, why you would want to use them and how to install them.</p>
+<p>We:</p>
+<ul>
+<li><a href="#introduce-eleventy-and-tailwindcss" target="_self">Introduce Eleventy and Tailwind CSS</a></li>
+<li><a href="#install-eleventy" target="_self">Install Eleventy</a></li>
+<li><a href="#install-tailwindcss" target="_self">Install Tailwind CSS</a></li>
+</ul>
+<p><em>Whenever you see the '$' symbol in front of a command, it's a terminal command.</em></p>
+<h3><span id="introduce-eleventy-and-tailwindcss">Introduce Eleventy and Tailwind CSS<span></h3>
+<p>Eleventy is a simple static site generator. A static site generator reads our content, feeds it to templates and outputs static HTML files that we can upload to our web hosting service. There are a lot of different static site generators out there. stubborncode.com was previously built with Hugo, which uses the Go language that I'm not very familiar with. Eleventy is using JavaScript, which I know quite well. It's also quite simple, but powerful enough that I can add more features in the future.</p>
+<p>Tailwind CSS is a low-level utility class CSS framework. Most CSS frameworks do too much. Frameworks such as <a href="https://getbootstrap.com/%5D">Bootstrap</a>, or <a href="https://bulma.io/">Bulma</a> give you full fledged components that are easy and fast to work with. However, this also leads to sites that might look similar to each other and are difficul to customize. Tailwind's classes give you the ability to create true custom designs, but that does not come without a cost. If you want a quick design, you might still want to use a component framework. Tailwind resets all styles by default, which practically means that you need to style everything yourself.</p>
+<h3><span id="install-eleventy">Install Eleventy<span></h3>
+<p>In order to use Eleventy you need to install node.js. You can get its installer from <a href="https://nodejs.org/en/">here</a>. I prefer to use a node version manager that gives me the flexibility to install and use different node versions if I ever need to. If you're on a Mac or Linux computer, you can use <a href="https://github.com/nvm-sh/nvm">nvm</a>. I am on Windows, so I'm using <a href="https://github.com/nullivex/nodist">nodist</a>. After you install node, you automatically get npm, the node package manager, as well. To use that you need a console emulator. If you are on a UNIX-like system, you can use the native terminal app. On Windows, you can use something like <a href="https://cmder.net/">cmder</a>.</p>
+<p>Unlike other static site generators, Eleventy does not scaffold your project, but only generates files in an existing project folder.</p>
+<p>In a terminal, we can create a project folder with <code>mkdir</code> and <code>cd</code> into it using the commands below:</p>
+<pre><code>$ mkdir name_of_your_project
+$ cd name_of_your_project
+</code></pre>
+<p>We can now initialize a node project with:</p>
+<pre><code>$ npm init -y
+</code></pre>
+<p>The -y flag will accept everything and give us the default configuration.</p>
+<p>We can either install Eleventy globally with:</p>
+<pre><code>$ npm install -g @11ty/eleventy
+</code></pre>
+<p>or locally, as a development dependency running the below command:</p>
+<pre><code>$ npm install --save-dev @11ty/eleventy
+</code></pre>
+<p>I'm going to go ahead and install it as a dev dependency, which will also be helpful for the deployment as we will see in a later post.</p>
+<p>Eleventy compiles any files that have a valid template extension in the folder of our project into an output folder in the root of our project, which is named <code>_site</code> by default. We can also tell Eleventy to copy other file types that you might need such as images, or fonts, which we will do in a later post.</p>
+<h3><span id="install-tailwindcss">Install Tailwind CSS<span></h3>
+<p>We'll also install Tailwind CSS though npm. Note that Tailwind is a PostCSS plugin. PostCSS is a tool that transforms CSS through JavaScript. In order to use it in our project we need to install a few more dependencies as well.</p>
+<pre><code>$ npm install tailwindcss postcss-cli autoprefixer
+</code></pre>
+<p>'tailwindcss' obviously installs Tailwind.
+We are going to use the 'postcss-cli' to process our CSS and 'autoprefixer' is another PostCSS plugin that adds vendor prefixes to our CSS.</p>
+<p>With Tailwind installed, we run:</p>
+<pre><code>$ npx tailwind init
+</code></pre>
+<p>to create a Tailwind configuration file in our project folder named 'tailwind.config.js'. We will use that to customize Tailwind.</p>
+<p>We also need to create a PostCSS config file. I am going to create a file named 'postcss.config.js' in the root of our project folder. Here we specify which PostCSS plugins we want to use.</p>
+<p>This is what our PostCSS config looks like for now:</p>
+<pre><code>module.exports = {
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer')
+  ]
+}
+</code></pre>
+<p>We also need to create a CSS file for our plugins to process.</p>
+<p>I am going to create a folder named 'css' and inside it a file named 'tailwind.css'.</p>
+<p>This is what the 'tailwind.css' file contains:</p>
+<pre><code>@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</code></pre>
+<p>When PostCSS compiles our CSS, the '@tailwind' directive is going to insert Tailwind's base, components and utilities classes into our final CSS file.</p>
+<p>In order to compile our CSS, we are going to write a script in our 'package.json' file that is located in the root of our project folder.</p>
+<p>By default it only contains the following script:</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+</code></pre>
+<p>We are going to change the above to:</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;build&quot;: &quot;postcss css/tailwind.css -o _site/css/tailwind.css&quot;
+  },
+</code></pre>
+<p>We want to run the postcss command, provide our input file which is located at 'css/tailwind.css' and use the -o flag to specify where we want our output file. Since we are using the default Eleventy output folder, which is '_site', we are going to save our output CSS in '_site/css/tailwind.css'.</p>
+<p>Now if we run:</p>
+<pre><code>$ npm run build
+</code></pre>
+<p>in our terminal, we should get our PostCSS generated css file.</p>
+<p>And that's it!</p>
+<h2>You have now setup a basic project with Eleventy and Tailwind CSS!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>
