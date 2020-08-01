@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="Build a Blog with Eleventy and Tailwind CSS - Part 2 - Templates & Layouts" name="Description">
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            Build a Blog with Eleventy and Tailwind CSS - Part 2 - Templates & Layouts</title>
+    </head>
+    <body>
+        <header class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75">
+    <div>
+        <a href="/" target="_self">
+            <p class="font-brand text-3xl sm:text-4xl">
+                Stubborn
+                <span class="text-brandLight">Code</span>
+            </p>
+        </a>
+    </div>
+    <div>
+        <a aria-label="Find me on YouTube" href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA" rel="noopener" target="_blank">
+            <svg class="w-12 h-12 fill-current text-brandLight" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-12 sm:pb-20 pt-4 sm:pt-8 leading-tight sm:leading-normal text-center sm:text-left m-auto">
+            <div class="text-3xl sm:text-4xl text-brandDark">Build a Blog with Eleventy and Tailwind CSS - Part 2 - Templates & Layouts</div>
+            <div class="flex flex-col xs:flex-row justify-center sm:justify-start text-gray-700">
+                <span class="mx-1">
+                    <span class="inline xs:hidden">Posted on</span>
+                    29 July, 2020</span>
+                <span class="hidden xs:block">·</span>
+                <span class="mx-1">6 mins to read</span>
+                
+            </div>
+            <div class="mt-4 sm:mt-8 text-2xl sm:text-3xl italic text-brandLight">
+                
+            </div>
+            <div class="markdown">
+                <p>In part 1 of this tutorial we created a node project, installed and setup Eleventy and Tailwind CSS.</p>
+<p>If you want to see how to do that please refer to <a href="/posts/build-a-blog-with-eleventy-and-tailwindcss-part-1">part 1</a>.</p>
+<p>In this part we:</p>
+<ul>
+<li><a href="#create-url-structure" target="_self">Create the site URL structure</a></li>
+<li><a href="#create-dummy-post" target="_self">Create a dummy post</a></li>
+<li><a href="#create-post-layout" target="_self">Create a post layout</a></li>
+<li><a href="#liquid-tags-front-matter" target="_self">Introduce Liquid tags and front matter</a></li>
+<li><a href="#add-partials" target="_self">Add a header and footer partial</a></li>
+</ul>
+<p>Eleventy uses template files. We write the content in a template file using a template language that Eleventy supports we run 11ty in the console and the template files get converted to HTML files. At least that's the simplified version of it.</p>
+<p>The following languages are supported:</p>
+<ul>
+<li>HTML *.html</li>
+<li>Markdown *.md</li>
+<li>JavaScript *.11ty.js</li>
+<li>Liquid *.liquid</li>
+<li>Nunjucks *.njk</li>
+<li>Handlebars *.hbs</li>
+<li>Mustache *.mustache</li>
+<li>EJS *.ejs</li>
+<li>Haml *.haml</li>
+<li>Pug *.pug</li>
+<li>JavaScript Template Literals *.jstl</li>
+</ul>
+<p>If we don't specify a language, or use a specific file extension, the default template language for HTML and Markdown files is Liquid. I find Liquid easy to use and sufficient for my needs, so I'll stick to that for now.</p>
+<h3><span id="create-url-structure">Create the site URL structure<span></h3>
+<p>Eleventy's URL structure is determined by the folder structure of our input folder, which in our case is the root folder of the project. Unless we use the permalink key, but we'll see that later.</p>
+<p>So if we want our blog to have this structure: <code>https://stubborncode.com/posts/name-of-post</code> we have two options.</p>
+<ol>
+<li>We create a folder named <code>posts</code> in our project folder. Inside that folder we create a file named <code>name-of-post.md</code>, which contains our content. In a console we can now run 11ty by typing:</li>
+</ol>
+<pre><code>npx eleventy
+</code></pre>
+<p>We get a folder named <code>posts</code>, which contains a folder named <code>name-of-post</code> and inside that, a file named index.html.</p>
+<ol start="2">
+<li>Once again, we create a folder named <code>posts</code> in our project folder. However, this time we create a folder named <code>name-of-post</code> and inside that a file named <code>index.md</code> with our content. When we run 11ty, we get the same structure that we got earlier...</li>
+</ol>
+<p>So at this point you might be wondering why we would select the second option, which has a few extra steps to it.</p>
+<p>Since we are building a blog, we might want to include additional files such as images and videos in our posts. If we went with the second option we can include additional files/folders in our posts that will remain post specific, so we're going with that.</p>
+<p>We create a folder named <code>posts</code> in our root folder. Inside that we'll have our folders with our posts. We cannot have two folders with the same name, so our URLs will be unique.</p>
+<h3><span id="create-dummy-post">Create a dummy post<span></h3>
+<p>Inside the <code>posts</code> folder we create a folder named <code>blog-part-1</code> and inside that a file named <code>index.md</code> where we will place our content.</p>
+<p>I'm going to use <a href="http://lorizzle.nl/">lorizzle</a>, which is a gangsta lorem ipsum generator to generate our dummy text, which we paste in our <code>index.md</code> file.</p>
+<p>If we run <code>npx eleventy</code> inside our <code>_site</code> folder, we get a <code>posts</code> folder that contains a <code>blog-part-1</code> folder that contains an index.html file!</p>
+<p>If we open that file we get the following:</p>
+<p><img src="img/blog-1.png" alt="blog-html"></p>
+<p>That looks like our Markdown file in HTML.</p>
+<p>And this is the page source:</p>
+<p><img src="img/blog-2.png" alt="blog-source"></p>
+<p>Now while this is valid HTML code, we are missing some tags in order to make it a proper HTML file.</p>
+<p>To do that we'll use a layout file.</p>
+<h3><span id="create-post-layout">Create a post layout<span></h3>
+<p>Layouts are special templates that can be used to wrap other content.</p>
+<p>We can have several layouts and this is what we'll do, but for now, we'll create a post layout, since all our posts of our site will have the same layout.</p>
+<p>The default folder that Eleventy will look for templates is <code>_includes</code> so we'll use that.</p>
+<p>We create a folder named <code>_includes</code> and inside that we create another folder named <code>layouts</code>, where we will keep our layouts.</p>
+<p>Inside the <code>layouts</code> folder we create our first layout named <code>post.liquid</code>.</p>
+<p>If you're using Visual Studio Code, you can enable Emmet HTML support in .liquid files by adding the following lines in your settings.json file.</p>
+<pre><code>&quot;emmet.includeLanguages&quot;: {
+    &quot;liquid&quot;: &quot;html&quot;,
+}
+</code></pre>
+<p>Inside <code>post.liquid</code> we scaffold a basic HTML skeleton using Emmet and then make a few adjustments.</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;Stubborn Code&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    {{ content }}
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+<p>This must look familiar. But what is that <code>{{ content }}</code>? That is a Liquid tag.</p>
+<h3><span id="liquid-tags-front-matter">Introduce Liquid tags and front matter<span></h3>
+<p>Liquid has two general types of tags. The first one seen here is delimited by double curly braces and denotes output. The second one is delimited by a pair of curly brace percentage symbols and denotes logic and control flow. We will see that later. For now you need to know that the <code>{{ content }}</code> tag will output the content of our templates. But we need to tell our templates to use this layout. To do that we use the template's front matter.</p>
+<p>Front matter is metadata attached to a template, where we can control how our template works, either using keys provided by 11ty or providing our own data. You can use a number of front matter languages, but here we'll use YAML, which is a superset of JSON.</p>
+<p>Front matter needs to be at the top of your template files and is delimited by <code>---</code>.</p>
+<p>On top of our <code>index.md</code> in the <code>posts/blog-part-1</code> folder we add:</p>
+<pre><code>---
+layout: layouts/post.liquid
+---
+</code></pre>
+<p>If we run 11ty again by typing <code>npx eleventy</code> in our console, we get our HTML file again. If we run that again we see that we now get our Markdown content with our post template layout.</p>
+<p>You might be wondering if you need to be running this command all the time to see your changes.</p>
+<p><em>You don't.</em></p>
+<p>If you add a --serve flag when you run Eleventy:</p>
+<pre><code>npx eleventy --serve
+</code></pre>
+<p>will run a local server at port 8080 by default, which will also reload whenever you make any changes. Just make sure to leave your terminal open and running. Also, keep in mind that in order for templates to reload they need to be wrapped in a layout.</p>
+<p>If you now open your browser and go to:</p>
+<pre><code>http://localhost:8080/posts/blog-part-1
+</code></pre>
+<p>you'll be able to see your 'site', which needs a bit more work!</p>
+<h3><span id="add-partials">Add a header and footer partial<span></h3>
+<p>Apart from layouts, we can also use partials. Partials often refer to snippets of HTML code that are not complete pages, but are intended to be used multiple times. Common examples are headers and footers and this is exactly what we'll use them for here.</p>
+<p>Inside the <code>_includes</code> folder we create another folder named <code>partials</code>. Inside the <code>partials</code> folder we create a file named <code>_header.html</code>. It's common practice to start a partial name with an underscore.</p>
+<p>This is what we want our header partial to contain:</p>
+<pre><code>&lt;header&gt;
+  &lt;div&gt;
+    &lt;a href=&quot;/&quot; target=&quot;_self&quot;&gt;
+      &lt;p&gt;
+        Stubborn Code
+      &lt;/p&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;a
+      href=&quot;https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA&quot;
+      target=&quot;_blank&quot;
+    &gt;
+      &lt;svg height=&quot;200&quot; viewbox=&quot;0 0 20 20&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+        &lt;path
+          d=&quot;M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z&quot;
+        /&gt;
+      &lt;/svg&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+</code></pre>
+<p>We also need to update our layout file to include the partial.</p>
+<p>In our <code>post.liquid</code> layout file we add the following line between the <code>&lt;body&gt;</code> and the <code>{{ content }}</code> tag:</p>
+<pre><code>{% include partials/_header.html %}
+</code></pre>
+<p>Our post should now have a header, but it's not looking its best for now. We'll deal with that later.</p>
+<p>Time to add a footer partial.</p>
+<p>Inside the <code>partials</code> folder we create a file named <code>_footer.html</code> containing:</p>
+<pre><code>&lt;footer&gt;
+  &lt;div&gt;
+    &lt;p&gt;
+      Copyright &amp;copy; 2020 Stubborn Code
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;p&gt;Entypo pictograms by Daniel Bruce — www.entypo.com&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+<p>In our <code>post.liquid</code> layout file we include the footer partial by adding the following line between the <code>{{ content }}</code> and the <code>&lt;/body&gt;</code> tag:</p>
+<pre><code>{% include partials/_footer.html %}
+</code></pre>
+<p>Our post now includes a basic header, a basic footer and content. But it looks quite ugly.</p>
+<p>We'll fix that in the next part of this series, where we include Tailwind CSS and deal with styling.</p>
+<p>And that's it!</p>
+<h2>You have now created a post layout with Eleventy!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>

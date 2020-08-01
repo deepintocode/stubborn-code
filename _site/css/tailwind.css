@@ -245,6 +245,10 @@ button:-moz-focusring,
  * Add the correct display in IE 10+.
  */
 
+template {
+  display: none;
+}
+
 /**
  * Add the correct display in IE 10.
  */
@@ -460,40 +464,6 @@ video {
   height: auto;
 }
 
-.container {
-  width: 100%;
-}
-
-@media (min-width: 480px) {
-  .container {
-    max-width: 480px;
-  }
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
 @font-face {
   font-family: "Marske";
 
@@ -635,6 +605,40 @@ video {
     }
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .container {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
 .bg-brandDark {
   --bg-opacity: 1;
   background-color: #48051a;
@@ -773,6 +777,10 @@ video {
 
 .pb-24 {
   padding-bottom: 6rem;
+}
+
+.static {
+  position: static;
 }
 
 .fixed {

@@ -5,6 +5,7 @@ pagination:
   size: 10
   reverse: true
   alias: posts
+permalink: "{% if pagination.pageNumber > 0 %}posts/page-{{ pagination.pageNumber | plus: 1}}{% endif %}/index.html"
 ---
 
 {%- for post in posts -%}
