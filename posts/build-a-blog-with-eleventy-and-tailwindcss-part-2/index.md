@@ -1,10 +1,12 @@
 ---
 title: Build a Blog with Eleventy and Tailwind CSS - Part 2 - Templates & Layouts
 date: 2020-07-29
-videoDuration:
-videoLink:
+videoDuration: 12 mins
+videoLink: https://youtu.be/82-rmJtfo_o
 description: "This is the second in a series of tutorials that show how to create a blog with the static generator Eleventy and the utility-first Tailwind CSS framework. In the first post we installed Eleventy and Tailwind CSS. We now introduce templates, create a post layout and add header and footer partials."
 ---
+
+{{ videoLink }}
 
 In part 1 of this tutorial we created a node project, installed and setup Eleventy and Tailwind CSS.
 
