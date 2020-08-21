@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="Build a Blog with Eleventy and Tailwind CSS - Part 3 - Styling" name="Description">
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            Build a Blog with Eleventy and Tailwind CSS - Part 3 - Styling</title>
+    </head>
+    <body>
+        <header class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75">
+    <div>
+        <a href="/" target="_self">
+            <p class="font-brand text-3xl sm:text-4xl">
+                Stubborn
+                <span class="text-brandLight">Code</span>
+            </p>
+        </a>
+    </div>
+    <div>
+        <a aria-label="Find me on YouTube" href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA" rel="noopener" target="_blank">
+            <svg class="w-12 h-12 fill-current text-brandLight" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-12 sm:pb-20 pt-4 sm:pt-8 leading-tight sm:leading-normal text-center sm:text-left m-auto">
+            <div class="text-3xl sm:text-4xl text-brandDark">Build a Blog with Eleventy and Tailwind CSS - Part 3 - Styling</div>
+            <div class="flex flex-col xs:flex-row justify-center sm:justify-start text-gray-700">
+                <span class="mx-1">
+                    <span class="inline xs:hidden">Posted on</span>
+                    20 August, 2020</span>
+                <span class="hidden xs:block">·</span>
+                <span class="mx-1">17 mins to read</span>
+                
+                    <span class="hidden xs:block">·</span>
+                    <span class="mx-1">30 mins
+                        to watch</span>
+                
+            </div>
+            
+                <div class="mt-4 sm:mt-8 text-2xl sm:text-3xl italic text-brandLight">
+                    <h3>tl;dw If you prefer a text version keep on reading!</h3>
+                </div>
+            
+            <div class="markdown">
+                <div id="6xs8K7L5uuk" class="eleventy-plugin-youtube-embed"style="position:relative;width:100%;padding-top: 56.25%;"><iframe style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;" width="100%" height="100%" frameborder="0" src="https://www.youtube-nocookie.com/embed/6xs8K7L5uuk" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p>In the previous part of this tutorial we created the post layout and added header and footer partials. In this one we make them look better.</p>
+<p>If you want to see what we've done until now, please refer to <a href="/posts/build-a-blog-with-eleventy-and-tailwindcss-part-1">part 1</a> and <a href="/posts/build-a-blog-with-eleventy-and-tailwindcss-part-2">2</a>.</p>
+<p>In this tutorial we:</p>
+<ul>
+<li><a href="#talk-briefly-about-tailwindcss" target="_self">Talk briefly about utility classes and TailwindCSS</a></li>
+<li><a href="#extend-tailwindcss-color-palette" target="_self">Extend the TailwindCSS default color palette</a></li>
+<li><a href="#add-custom-fonts" target="_self">Add custom fonts</a></li>
+<li><a href="#style-header-partial" target="_self">Style the header partial</a></li>
+<li><a href="#style-footer-partial" target="_self">Style the footer partial</a></li>
+<li><a href="#style-markdown-content" target="_self">Style the markdown content</a></li>
+</ul>
+<p><em>Whenever you see the '$' symbol in front of a command, it's a terminal command.</em></p>
+<h3><span id="talk-briefly-about-tailwindcss">Talk briefly about utility classes and TailwindCSS<span></h3>
+<p>Utility classes in CSS are classes that serve a specific purpose and their name usually resembles their operation. A utility-first framework does not include fully-fledged components such as navigation bars, cards and modals. Instead, it has a vast number of utility classes, which allow you to easily build your own custom components.</p>
+<p>You can see all the available classes in the <a href="https://tailwindcss.com/docs/">TailwindCSS documentation</a>, but I'll try and explain the core concepts and most commonly used classes as we go along.</p>
+<h3><span id="extend-tailwindcss-color-palette">Extend the TailwindCSS default color palette<span></h3>
+<p>While TailwindCSS includes a huge number of classes, you might still want to customize it. In our case, we want to add two brand colors, include two custom fonts, and add a custom media query breakpoint.</p>
+<p>The way we extend our theme is by modifying the <code>tailwind.config.js</code> file that TailwindCSS created for us when we initialized it in part 1.</p>
+<p>The <code>tailwind.config.js</code> file is in the root of our project folder and if you haven't modified it, should contain the following:</p>
+<pre><code>module.exports = {
+  purge: [],
+  theme: {
+    extend: {},
+  },
+  variants: {},
+  plugins: [],
+}
+</code></pre>
+<p>There are two main ways to customize the default theme. We can override the default classes by adding objects directly inside the <code>theme</code> object, or extend the theme by adding extra classes by placing key-value pairs inside the <code>extend</code> object. Here, we will go with the latter.</p>
+<p>Tailwind CSS has a broad range of colors in its <a href="https://tailwindcss.com/docs/customizing-colors/#default-color-palette">default palette</a>. By default they are shared by the textColor, borderColor and backgroundColor utilities.</p>
+<p>Apart from black and white, which have exactly one color, the rest of its colors come with a modifier ranging from 100 to 900. 100 is the lightest shade of the color and 900 is the darkest.</p>
+<p>We want to add two shades of pink/purple that are close to the branding of the Stubborn Code YouTube channel. The new <code>tailwind.config.js</code> file is:</p>
+<pre><code>module.exports = {
+  purge: [],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          light: &quot;#a70c3d&quot;,
+          dark: &quot;#48051a&quot;,
+        }
+      },
+    },
+  },
+  variants: {},
+  plugins: [],
+}
+</code></pre>
+<p>The way we use the textColor utility is by adding a class that has this form:</p>
+<pre><code>.text-color-modifier
+</code></pre>
+<p>So to use our two new colors to color our text we can use the following classes:</p>
+<pre><code>.text-brand-light
+.text-brand-dark
+</code></pre>
+<p>We can also declare the <code>default</code> modifier in the <code>tailwind.config.js</code> file and use one <code>text-brand</code> class with, and one <code>text-brand</code> class without a modifier inside our markup, but I'm using both light and dark modifiers in order to be more explicit.</p>
+<h3><span id="add-custom-fonts">Add custom fonts<span></h3>
+<p>The two fonts that we're using are <a href="https://fonts.google.com/specimen/Nunito">Nunito</a> and <a href="https://www.behance.net/gallery/21677209/Marske-FREE-FONT">Marske</a>, which are both free to use.</p>
+<p>When you download the fonts, you'll notice that they're either in .ttf or .otf format. While these work just fine and provide good browser compatibility, I prefer to use .woff2 or .woff fonts since they offer great compression levels. While .woff2 fonts offer, on average, a 30% reduction in file size, they don't have the wide support that .woff fonts do, so what I like to do is use .woff2 fonts, but include .woff fonts as a fallback option. Also if you want to support Internet Explorer 8 or below, you shouldn't use either...</p>
+<p>You can use any file converter to convert your fonts to your desired format. I used <a href="https://cloudconvert.com/">cloudconvert</a>.</p>
+<p>We now have our Nunito and Marske fonts in .woff and .woff2 formats.</p>
+<p>There are a few steps we need to take before we're able to use our fonts.</p>
+<p>Once again we need to extend the default theme of Tailwind. More specifically the <code>fontFamily</code> object.</p>
+<p>Since we want to use 'Nunito' as our default font, we can modify Tailwind's default font family, which is the sans family. However, since the default theme is using an array of font families we need to tell the configuration to add 'Nunito', but also preserve the default ones as fallback fonts.</p>
+<p>On top of our <code>tailwind.config.js</code> file we add the following line:</p>
+<pre><code>const defaultTheme = require(&quot;tailwindcss/defaultTheme&quot;);
+</code></pre>
+<p>This loads the default theme's values and saves them in the <code>defaultTheme</code> variable. We can now update the file as follows:</p>
+<pre><code>const defaultTheme = require(&quot;tailwindcss/defaultTheme&quot;);
+
+module.exports = {
+  purge: [],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          light: &quot;#a70c3d&quot;,
+          dark: &quot;#48051a&quot;,
+        }
+      },
+      fontFamily: {
+        sans: [&quot;Nunito&quot;, ...defaultTheme.fontFamily.sans],
+        brand: [&quot;Marske&quot;, ...defaultTheme.fontFamily.sans],
+      },
+    },
+  },
+  variants: {},
+  plugins: [],
+}
+</code></pre>
+<p>The line:</p>
+<pre><code>sans: [&quot;Nunito&quot;, ...defaultTheme.fontFamily.sans],
+</code></pre>
+<p>is using the spread(...) operator. defaultTheme.fontFamily.sans contains an array with the theme's default sans font families. Here we define a new array that has 'Nunito' at index 0. The spread operator expands the values of the old array and appends them to the new array. The 'brand' font family didn't exist so we can define that freely without overwriting anything, but we still include the sans font family as a fallback.</p>
+<p>We have now told Tailwind to create classes that contain our fonts, but we haven't actually loaded our fonts.</p>
+<p>In the 'css' folder that we created in part 1 of the tutorial, create a folder named 'fonts' and copy both .woff and .woff2 versions of our fonts.</p>
+<p>The folder should now contain the following files or similar:</p>
+<pre><code>Marske.woff
+Marske.woff2
+Nunito-Regular.woff
+Nunito-Regular.woff2
+</code></pre>
+<p>Remember that we are using Eleventy, so our output folder is <code>_site</code>. By default, 11ty will not copy .woff and .woff2 from our input to our output folder. We could tell 11ty to copy the specific file formats, but in this case, I think it is easier to just have 11ty copy the specific folder. It is also faster, as Eleventy doesn't need to scan the entire project directory.</p>
+<p>We create an <code>.eleventy.js</code> file in the root of our project. Inside that, we can either export an object or a function. Exporting a function allows for further customization using a number of helper methods, so we'll go with that.</p>
+<p>Our <code>.eleventy.js</code> file should now contain:</p>
+<pre><code>module.exports = function (eleventyConfig) {
+  // Copy `css/fonts/` to `_site/css/fonts`
+  eleventyConfig.addPassthroughCopy(&quot;css/fonts&quot;);
+};
+
+</code></pre>
+<p>Passthrough file copy entries are relative to the root of your project and not the Eleventy input folder. Since we didn't specify a different input directory, it doesn't make a difference here, but it's just something to keep in mind.</p>
+<p>11ty will now copy our fonts to the output directory.</p>
+<p>Last step is to include our font files in our CSS. We do that in the <code>tailwind.css</code> file that is located in the 'css' folder in the root of our project.</p>
+<p>That file should now contain the following:</p>
+<pre><code>@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</code></pre>
+<p>In order to avoid specificity issues, we add any custom styles, including our custom fonts, between <code>@tailwind base;</code> and <code>@tailwind components;</code>.</p>
+<p>We update the file accordingly:</p>
+<pre><code>@tailwind base;
+
+@font-face {
+  font-family: &quot;Marske&quot;;
+  src: local(&quot;Marske&quot;),
+       url(&quot;/css/fonts/Marske.woff2&quot;) format(&quot;woff2&quot;),
+       url(&quot;/css/fonts/Marske.woff&quot;) format(&quot;woff&quot;);
+}
+
+@font-face {
+  font-family: &quot;Nunito&quot;;
+  src: local(&quot;Nunito&quot;),
+       url(&quot;/css/fonts/Nunito-Regular.woff2&quot;) format(&quot;woff2&quot;),
+       url(&quot;/css/fonts/Nunito-Regular.woff&quot;) format(&quot;woff&quot;);
+
+@tailwind components;
+@tailwind utilities;
+</code></pre>
+<p>The @font-face CSS at-rule specifies a custom font. The font can either be loaded from a server or locally. Using both the <code>local()</code> and <code>url()</code> we can look for the font name on the user's computer. If a version of the font is found locally, that is used. Otherwise the .woff2 version that we specified is downloaded. Lastly, if the browser doesn't support .woff2 fonts, the .woff version is downloaded and used.</p>
+<p>Since all our setup is ready, we can now run the following in our console after we <code>cd</code> into the root of our project:</p>
+<pre><code>$ npm run build
+$ npx eleventy --serve
+</code></pre>
+<p>The first line builds our Tailwind CSS file with our custom additions included, and the second one runs Eleventy and keeps watching for file changes, so you should leave your terminal open.</p>
+<p>We are now ready to start styling our blog!</p>
+<h3><span id="style-header-partial">Style the header partial<span></h3>
+<p>This is how our post looks like now:</p>
+<p><img src="img/blog-1.png" alt="blog-without-tailwind"></p>
+<p>Before we start styling the header partial, it would help if we could see the changes. Since we are working with the post layout, we can include our CSS in the <code>post.liquid</code> file that is located in <code>_includes\layouts</code> by adding the following line inside the <code>&lt;head&gt;</code> tag:</p>
+<pre><code>&lt;link href=&quot;/css/tailwind.css&quot; rel=&quot;stylesheet&quot;/&gt;
+</code></pre>
+<p>After we add the above line, our post looks like this:</p>
+<p><img src="img/blog-2.png" alt="blog-with-tailwind"></p>
+<p>When we included the <code>@tailwind base;</code> directive in our CSS file we told Tailwind to inject its base styles. This set of base styles is called Preflight and is built on top of <code>normalize.css</code>. Among other things, it removes the default margins, headings and lists are unstyled, etc. That means that after we style our header and footer, we need to style our main content as well! But, we'll deal with that later.</p>
+<p>We want our header to be a simple navbar with our logo on the left and an SVG that links to the Stubborn Code YouTube channel on the right.</p>
+<p>This is what our <code>_header.html</code> partial file looks like at the moment:</p>
+<pre><code>&lt;header&gt;
+  &lt;div&gt;
+    &lt;a href=&quot;/&quot; target=&quot;_self&quot;&gt;
+      &lt;p&gt;
+        Stubborn Code
+      &lt;/p&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;a
+      href=&quot;https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA&quot;
+      target=&quot;_blank&quot;
+    &gt;
+      &lt;svg height=&quot;200&quot; viewbox=&quot;0 0 20 20&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+        &lt;path
+          d=&quot;M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z&quot;
+        /&gt;
+      &lt;/svg&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+</code></pre>
+<p>We will convert our <code>&lt;header&gt;</code> tag into a flex container.</p>
+<p>We add the following classes to the <code>&lt;header&gt;</code> tag:</p>
+<pre><code>&lt;header class=&quot;flex items-center justify-between&quot;&gt;
+</code></pre>
+<p>During the first introduction of Tailwind classes I will include their equivalent CSS properties as below.</p>
+<pre><code>Class            --&gt; Property
+
+.flex            --&gt; display: flex;
+.items-center    --&gt; align-items: center;
+.justify-between --&gt; justify-content: space-between;
+</code></pre>
+<p>Our header has now our logo on the far left, our YouTube link on the far right, both centered vertically and looks like this:</p>
+<p><img src="img/blog-3.png" alt="header-flex"></p>
+<p>Next thing we want is to add some padding and a bottom border, so it's probably a good time to talk about how Tailwind deals with spacing.</p>
+<p>The default spacing scale goes from 0 to 256px/16rem. One spacing unit is 4px or 0.25rem and values are proportional. This means that a value of 8 which gives us 32px/2rem is twice the spacing that 4 gives us, which is 16px/1rem.</p>
+<p>The spacing scale is used for paddings, margins, height and width attributes to name a few.</p>
+<p>For a horizontal padding of 2rem we can use:</p>
+<pre><code>Class --&gt; Property
+
+.px-8 --&gt; padding: 0 2rem;
+</code></pre>
+<p><code>p</code> for padding, <code>x</code> for the x axis and <code>8</code> for our spacing value.</p>
+<p>In order to add our bottom border we add the following classes:</p>
+<pre><code>Class               --&gt; Property
+
+.border-b-2         --&gt; border-bottom-width: 2px;
+.border-brand-light --&gt; border-color: rgba(167, 12, 61, var(--border-opacity));
+.border-opacity-75  --&gt; --border-opacity: 0.75;
+</code></pre>
+<p>The <code>.border-brand-light</code> class sets our border's color to the custom brand light color we defined earlier.</p>
+<p>Our <code>&lt;header&gt;</code> tag now looks like this:</p>
+<pre><code>&lt;header class=&quot;flex items-center justify-between px-8 border-b-2 border-brand-light border-opacity-75&quot;&gt;
+</code></pre>
+<p>And our actual header like this:</p>
+<p><img src="img/blog-4.png" alt="header-with-border"></p>
+<p>We want our logo to have the custom font that we defined earlier so we add the following:</p>
+<pre><code>Class       --&gt; Property
+
+.font-brand --&gt; font-family: Marske, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;
+}
+</code></pre>
+<p>We also want the 'Code' part of the logo to have our brand light color, so we wrap that in a <code>&lt;span&gt;</code> tag and add this class to it:</p>
+<pre><code>Class              --&gt; Property
+
+.text-brand-light  --&gt; color: rgba(167, 12, 61, var(--text-opacity));
+</code></pre>
+<p>We want to increase our logo's size but we also want it to change according to the screen size, so now is a good time to talk about Tailwind's breakpoints.</p>
+<p>Tailwind's breakpoints are basically CSS media queries and by default are the following:</p>
+<pre><code>'sm': '640px',
+// =&gt; @media (min-width: 640px) { ... }
+
+'md': '768px',
+// =&gt; @media (min-width: 768px) { ... }
+
+'lg': '1024px',
+// =&gt; @media (min-width: 1024px) { ... }
+
+'xl': '1280px',
+// =&gt; @media (min-width: 1280px) { ... }
+</code></pre>
+<p>We can also add our own, which is something that we'll do later on. As you might have noticed these breakpoints are min-width, which means that if you specify a class for a breakpoint that class will come into effect for resolutions that match the breakpoint and higher. You can also specify max-width breakpoints, but we won't do this in this series.</p>
+<p>We use these as a prefix modifier in front of the class that we want to use. So we add the following classes to the <code>&lt;p&gt;</code> tag that holds our logo:</p>
+<pre><code>Class         --&gt; Property
+
+.text-3xl     --&gt; font-size: 1.875rem;
+.sm:text-4xl  --&gt; font-size: 2.25rem;
+</code></pre>
+<p>resulting to:</p>
+<pre><code>&lt;p class=&quot;font-brand text-3xl sm:text-4xl&quot;&gt;
+</code></pre>
+<p>Since we didn't specify a breakpoint for the first font size, we are getting a font size of 1.875rem for resolutions less than <code>640px</code>. For resolutions higher than that, we get the bigger font size of 2.25rem.</p>
+<p>Our header now looks like this and our logo is exactly as we want it:</p>
+<p><img src="img/blog-5.png" alt="header-logo-done"></p>
+<p>Only thing left in our header is the YouTube link.</p>
+<p>We remove the <code>height</code> attribute from the SVG and add the following class to specify the height in that way:</p>
+<pre><code>Class --&gt; Property
+
+.h-12 --&gt; height: 3rem;
+</code></pre>
+<p>In order to specify the color of an SVG element, we can combine two classes, <code>.fill-current</code> and <code>text-color</code>.</p>
+<p>In our case we add the following:</p>
+<pre><code>Class             --&gt; Property
+
+.fill-current	  --&gt; fill: currentColor;
+.text-brand-light --&gt; color: rgba(167, 12, 61, var(--text-opacity));
+</code></pre>
+<p>And the YouTube SVG icon gets our custom brand color.</p>
+<p>This is what the <code>_header.html</code> partial file looks like now:</p>
+<pre><code>&lt;header
+  class=&quot;flex items-center justify-between px-8 border-b-2 border-brand-light border-opacity-75&quot;
+&gt;
+  &lt;div&gt;
+    &lt;a href=&quot;/&quot; target=&quot;_self&quot;&gt;
+      &lt;p class=&quot;font-brand text-3xl sm:text-4xl&quot;&gt;
+        Stubborn
+        &lt;span class=&quot;text-brand-light&quot;&gt;Code&lt;/span&gt;
+      &lt;/p&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;a
+      href=&quot;https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA&quot;
+      target=&quot;_blank&quot;
+    &gt;
+      &lt;svg
+        class=&quot;h-12 fill-current text-brand-light&quot;
+        viewbox=&quot;0 0 20 20&quot;
+        xmlns=&quot;http://www.w3.org/2000/svg&quot;
+      &gt;
+        &lt;path
+          d=&quot;M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z&quot;
+        /&gt;
+      &lt;/svg&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+</code></pre>
+<p>And this is how our actual header looks like, which is exactly as we want it!</p>
+<p><img src="img/blog-6.png" alt="header-done"></p>
+<p>We should also style our footer.</p>
+<h3><span id="style-footer-partial">Style the footer partial<span></h3>
+<p>Our footer styling is going to be similar to our header.</p>
+<p>Right now, our footer appears like it's part of our content:</p>
+<p><img src="img/blog-7.png" alt="footer-unstyled"></p>
+<p>Our footer is actually comprised by the two last lines:</p>
+<pre><code>Copyright © 2020 Stubborn Code
+Entypo pictograms by Daniel Bruce — www.entypo.com
+</code></pre>
+<p>This is our <code>_footer.html</code> partial file:</p>
+<pre><code>&lt;footer&gt;
+    &lt;div&gt;
+        &lt;p&gt;
+            Copyright &amp;copy; 2020 Stubborn Code
+        &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;p&gt;Entypo pictograms by Daniel Bruce — www.entypo.com&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+<p>We add the following classes to the <code>&lt;footer&gt;</code> tag:</p>
+<pre><code>Class             --&gt; Property
+
+.flex             --&gt; display: flex;
+.items-center     --&gt; align-items: center;
+.justify-between  --&gt; justify-content: space-between;
+.bg-brand-dark    --&gt; background-color: rgba(72, 5, 26, var(--bg-opacity));
+.text-gray-100    --&gt; color: rgba(247, 250, 252, var(--text-opacity));
+.px-8             --&gt; padding: 0 2rem;
+</code></pre>
+<p>So this is how our <code>&lt;footer&gt;</code> tag looks now:</p>
+<pre><code>&lt;footer
+  class=&quot;flex items-center justify-between bg-brand-dark text-gray-100 px-8&quot;
+&gt;
+</code></pre>
+<p>We are mostly using classes that we've used earlier for our header to get a flex container and padding on the x axis.</p>
+<p>However, this time we use the <code>.bg-brand-dark</code> class to set our footer's background color to our dark brand color and <code>.text-gray-100</code> to set our text color to the lightest shade of gray from the default color palette.</p>
+<p>This is what we get:</p>
+<p><img src="img/blog-8.png" alt="footer-flex"></p>
+<p>We just need to make a few adjustments to get it exactly right.</p>
+<p>I think the font size is a bit big, so we're going to add the following to our <code>&lt;p&gt;</code> tags of our footer:</p>
+<pre><code>Class     --&gt; Property
+
+.text-sm  --&gt; font-size: 0.875rem;
+.text-xs  --&gt; font-size: 0.75rem;
+</code></pre>
+<p>Finally, we want to style the 'Stubborn Code' part differently, so we'll wrap that in a <code>&lt;span&gt;</code> tag and add the following classes to it:</p>
+<pre><code>Class           --&gt; Property
+
+.font-brand     --&gt; font-family: Marske, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;
+.ml-2           --&gt; margin-left: 0.5rem;
+.text-lg        --&gt; font-size: 1.125rem;
+.tracking-wider --&gt; letter-spacing: 0.05em;
+</code></pre>
+<p>Our footer now looks like this:</p>
+<p><img src="img/blog-9.png" alt="footer-done"></p>
+<p>Now, we should also deal with the look of our post content.</p>
+<h3><span id="style-markdown-content">Style the markdown content<span></h3>
+<p>As mentioned earlier, Tailwind CSS removes the default styles for a number of things. That means that, right now, our content is completely unstyled. Since I want to use Markdown files as templates for my posts, I won't be able to use utility classes to style the content directly. Furthermore, I wouldn't want to style each and every post every time, since they're going to be quite similar in form. Also, I don't want to use the same styles for all paragraphs, headings, etc. across the website.</p>
+<p>What we'll do to solve this is create a <code>&lt;div&gt;</code> tag container that will wrap all our markdown content and assign utility classes to its children.</p>
+<p>In order to make our code more concise and compact, I'll also install another PostCSS plugin, <a href="https://www.npmjs.com/package/postcss-nesting">postcss-nesting</a> that will let us nest style rules inside each other. We can use <code>npm</code> to install it. In our console emulator, we run the following:</p>
+<pre><code>$ npm i postcss-nesting
+</code></pre>
+<p>We also need to include it in our <code>postcss.config.js</code> file:</p>
+<pre><code>module.exports = {
+  plugins: [
+    require(&quot;tailwindcss&quot;),
+    require(&quot;postcss-nesting&quot;),
+    require(&quot;autoprefixer&quot;),
+  ],
+};
+</code></pre>
+<p>We can now add our custom CSS in our input CSS file <code>tailwind.css</code> that is located in the <code>css</code> folder. Tailwind's <code>@apply</code> directive lets us compose CSS component classes from the existing utilities. It can be used to create reusable components, such as buttons, modals, or cards, but it can also help us create rules for our markdown class.</p>
+<p>Unfortunately, the <code>@apply</code> directive does not work with pseudo-classes, or responsive variants, so we also need to use another directive, <code>@screen</code>.</p>
+<p>Since we are defining custom components, it is recommended to place them between <code>@tailwind components</code> and <code>@tailwind utilities</code> to avoid any specificity issues.
+Keeping this in mind, inside the file I'm going to enter the following:</p>
+<pre><code>.markdown {
+  @apply text-base text-justify text-gray-900 leading-normal subpixel-antialiased;
+
+  &amp; &gt; * {
+    @apply mt-8;
+  }
+
+  &amp; strong,
+  &amp; strong a {
+    @apply font-bold;
+  }
+
+  &amp; a {
+    @apply text-blue-700 font-bold;
+  }
+
+  &amp; a:hover {
+    @apply text-blue-400;
+  }
+
+  &amp; a:focus {
+    @apply outline-none bg-blue-200 shadow-outline;
+  }
+
+  &amp; h1 {
+    @apply leading-tight text-3xl font-bold mb-12;
+  }
+
+  &amp; h2 {
+    @apply leading-tight text-2xl font-bold mb-10;
+  }
+
+  &amp; h3 {
+    @apply leading-tight text-xl font-bold mb-8;
+  }
+
+  &amp; img {
+    @apply m-auto;
+  }
+
+  &amp; code {
+    @apply font-mono text-sm inline bg-gray-200 px-1;
+  }
+
+  &amp; pre code {
+    @apply block bg-gray-900 text-base text-gray-200 font-mono overflow-auto p-4 rounded;
+  }
+
+  &amp; blockquote {
+    @apply border-l-4 border-gray-400 pl-4 italic;
+  }
+
+  &amp; ul,
+  &amp; ol {
+    @apply pl-5;
+    @screen sm {
+      @apply pl-10;
+    }
+  }
+
+  &amp; ul {
+    @apply list-disc;
+  }
+
+  &amp; ol {
+    @apply list-decimal;
+  }
+}
+
+@screen sm {
+  .markdown {
+    @apply text-lg;
+
+    &amp; h1 {
+      @apply text-4xl;
+    }
+
+    &amp; h2 {
+      @apply text-3xl;
+    }
+
+    &amp; h3 {
+      @apply text-2xl;
+    }
+
+    &amp; pre code {
+      @apply text-lg;
+    }
+  }
+}
+</code></pre>
+<p>I'm not going to go through and explain every class, since we have seen most of them and you can check out the rest in Tailwind's documentation, but there are a few things to note here.</p>
+<ol>
+<li>We are using nested rules. There is a <code>.markdown</code> class and we are targeting that and its children. Whenever you see the ampersand symbol (&amp;), you replace it with its parent class. For example:</li>
+</ol>
+<pre><code>.markdown {
+  &amp; h2 {
+    @apply leading-tight text-2xl font-bold mb-10;
+  }
+}
+</code></pre>
+<p>would become:</p>
+<pre><code>.markdown h2 {
+    @apply leading-tight text-2xl font-bold mb-10;
+}
+</code></pre>
+<ol start="2">
+<li>The classes that come first are applied for resolutions smaller than '640px'. After that, the rules inside the <code>@screen</code> directive are applied.</li>
+<li>The equivalent of:</li>
+</ol>
+<pre><code>@screen sm {
+   /* ... */
+}
+</code></pre>
+<p>is:</p>
+<pre><code>@media (min-width: 640px) {
+  /* ... */
+}
+</code></pre>
+<ol start="4">
+<li>There are no right or wrong values here. I came up with these values after experimenting and adjusting according to my needs. Feel free to use the values I provided, use them as a base and work from there, or use your own.</li>
+<li>Remember that whenever you make changes to this file, you need to run your PostCSS script in order to generate the output CSS file by running the following in the console:</li>
+</ol>
+<pre><code>npm run build
+</code></pre>
+<p>Our output CSS is now updated, but we also need to wrap our content in a <code>.markdown</code> class. Since we want to write all our posts in Markdown, we'll do that inside the <code>post.liquid</code> layout.</p>
+<p>That's how this file looks at the moment:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta content=&quot;width=device-width, initial-scale=1.0&quot; name=&quot;viewport&quot; /&gt;
+    &lt;link href=&quot;/css/tailwind.css&quot; rel=&quot;stylesheet&quot; /&gt;
+    &lt;title&gt;Stubborn Code&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    {% include partials/_header.html %}
+    {{ content }}
+    {% include partials/_footer.html %}
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>We just wrap our <code>{{ content }}</code> in a <code>&lt;div&gt;</code> tag with a <code>.markdown</code> class like this:</p>
+<pre><code>&lt;div class=&quot;markdown&quot;&gt;
+  {{ content }}
+&lt;/div&gt;
+</code></pre>
+<p>Our post now looks like this:</p>
+<p><img src="img/blog-10.png" alt="markdown-styling-done"></p>
+<p>We're getting there, but we still need to add a few things in our layout file.</p>
+<p>We want to wrap all our content in a container like so:</p>
+<pre><code>&lt;div class=&quot;container px-6 sm:px-12 lg:px-48 pb-12 sm:pb-20 pt-4 sm:pt-8 leading-tight sm:leading-normal text-center sm:text-left m-auto&quot;&gt;
+  &lt;div class=&quot;markdown&quot;&gt;
+    {{ content }}
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Before our content, we want to display our post title like this:</p>
+<pre><code>&lt;div class=&quot;text-3xl sm:text-4xl text-brand-dark&quot;&gt;{{ title }}&lt;/div&gt;
+</code></pre>
+<p>The <code>{{ title }}</code> tag is going to come from our front matter, so we need to make sure that we include a title variable in all our posts.</p>
+<p>The front matter of our markdown file for our dummy post looks like this now:</p>
+<pre><code>---
+layout: layouts/post.liquid
+title: Dummy Post
+---
+</code></pre>
+<p>Below our post title, we want to display some information about the post.</p>
+<p>The date of our post, how long it takes to read based on the word count, and how long it takes to watch the video, provided that there is one.</p>
+<p>Taking all that into account, this is how that info section looks like:</p>
+<pre><code>&lt;div class=&quot;flex flex-col xs:flex-row justify-center sm:justify-start text-gray-700&quot;&gt;
+    &lt;span class=&quot;mx-1&quot;&gt;
+        &lt;span class=&quot;inline xs:hidden&quot;&gt;Posted on&lt;/span&gt;
+        {{ date }}&lt;/span&gt;
+    &lt;span class=&quot;hidden xs:block&quot;&gt;·&lt;/span&gt;
+    &lt;span class=&quot;mx-1&quot;&gt;wordcount&lt;/span&gt;
+    {% if videoLink %}
+        &lt;span class=&quot;hidden xs:block&quot;&gt;·&lt;/span&gt;
+        &lt;span class=&quot;mx-1&quot;&gt;{{ videoDuration }}
+            to watch&lt;/span&gt;
+    {% endif %}
+&lt;/div&gt;
+</code></pre>
+<ol>
+<li>We need to add a date variable to our front matter. Please note that the valid format for a date is year-month-day and if the month and/or day have a single digit they should be prefixed by a '0'. Our new front matter is:</li>
+</ol>
+<pre><code>---
+layout: layouts/post.liquid
+title: Dummy Post
+date: 2020-08-12
+---
+</code></pre>
+<ol start="2">
+<li>We are using the word 'wordcount' as a placeholder. In the next tutorial we'll introduce Eleventy's filters and get the average time that one needs to read the post's content based on the word count.</li>
+<li>We want to hide a few information bits in the <code>xs</code> breakpoint. The problem is that we don't have an <code>xs</code> breakpoint. So let's add it now.
+In your <code>tailwind.config.js</code> file add the following inside the <code>extend</code> object:</li>
+</ol>
+<pre><code>screens: {
+        xs: &quot;480px&quot;,
+        ...defaultTheme.screens,
+},
+</code></pre>
+<p>Since we modified our <code>tailwind.config.js</code> file, we need to run our CSS build script in our console:</p>
+<pre><code>$ npm run build
+</code></pre>
+<ol start="4">
+<li>Here we see Liquid's if control flow tag. The content inside that block will only be displayed if the <code>videoLink</code> variable exists in our front matter. For now, we can add placeholder videoLink and videoDuration variables in our front matter, which now looks like like this:</li>
+</ol>
+<pre><code>---
+layout: layouts/post.liquid
+title: Dummy post
+date: 2020-08-10
+videoLink: Dummy link
+videoDuration: 26 mins
+---
+</code></pre>
+<p>Finally, we want a 'Too Long, Didn't Watch` paragraph that will only be displayed if there is a video link for the tutorial.</p>
+<pre><code>{% if videoLink %}
+&lt;div class=&quot;mt-4 sm:mt-8 text-2xl sm:text-3xl italic text-brand-light&quot;&gt;
+  &lt;h3&gt;tl;dw If you prefer a text version keep on reading!&lt;/h3&gt;
+&lt;/div&gt;
+{% endif %}
+</code></pre>
+<p>This is how our post looks like now:</p>
+<p><img src="img/blog-11.png" alt="final-styled"></p>
+<p>In the next part of the series, we'll introduce Eleventy's filters that will help us fix the date format and calculate how long it needs to read the post based on its word count.</p>
+<p>And that's it!</p>
+<h2>You have now styled your header, footer partials and Eleventy post template with Tailwind CSS!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>

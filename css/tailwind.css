@@ -12,6 +12,8 @@
   src: url("/css/fonts/Nunito-Regular.woff") format("woff");
 }
 
+@tailwind components;
+
 .markdown {
   @apply text-base text-justify text-gray-900 leading-normal subpixel-antialiased;
 
@@ -103,5 +105,4 @@
   }
 }
 
-@tailwind components;
 @tailwind utilities;

@@ -27,11 +27,11 @@
                         to watch</span>
                 {% endif %}
             </div>
-            <div class="mt-4 sm:mt-8 text-2xl sm:text-3xl italic text-brandLight">
-                {% if videoLink %}
+            {% if videoLink %}
+                <div class="mt-4 sm:mt-8 text-2xl sm:text-3xl italic text-brandLight">
                     <h3>tl;dw If you prefer a text version keep on reading!</h3>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
             <div class="markdown">
                 {{ content }}
             </div>

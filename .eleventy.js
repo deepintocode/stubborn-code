@@ -12,6 +12,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(embedYouTube);
   // Copy `css/fonts/` to `_site/css/fonts`
   eleventyConfig.addPassthroughCopy("css/fonts");
-  // Find and copy any `png` files, maintaining directory structure.
+  // Find and copy any `md,liquid,png,mp4` files, maintaining directory structure.
   eleventyConfig.setTemplateFormats(["md", "liquid", "png", "mp4"]);
 };
