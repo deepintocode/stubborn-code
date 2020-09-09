@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="Build a Blog with Eleventy and Tailwind CSS - Part 4 - Eleventy's Filters" name="Description">
+        <base target="_blank"/>
+        <link href="/favicon.png" rel="icon"/>
+        <link href="/css/tailwind.css" rel="stylesheet"/>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168452111-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-168452111-2");
+</script>
+        <title>Stubborn Code -
+            Build a Blog with Eleventy and Tailwind CSS - Part 4 - Eleventy's Filters</title>
+    </head>
+    <body>
+        <header class="flex items-center justify-between px-8 border-b-2 border-brandLight border-opacity-75">
+    <div>
+        <a href="/" target="_self">
+            <p class="font-brand text-3xl sm:text-4xl">
+                Stubborn
+                <span class="text-brandLight">Code</span>
+            </p>
+        </a>
+    </div>
+    <div>
+        <a aria-label="Find me on YouTube" href="https://www.youtube.com/channel/UCpyiNjtazH1DeU2rtMBCvEA" rel="noopener" target="_blank">
+            <svg class="w-12 h-12 fill-current text-brandLight" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2.3C.172 2.3 0 3.174 0 10s.172 7.7 10 7.7 10-.874 10-7.7-.172-7.7-10-7.7zm3.205 8.034l-4.49 2.096c-.393.182-.715-.022-.715-.456V8.026c0-.433.322-.638.715-.456l4.49 2.096c.393.184.393.484 0 .668z"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+        <div class="container px-6 sm:px-12 lg:px-48 pb-12 sm:pb-20 pt-4 sm:pt-8 leading-tight sm:leading-normal text-center sm:text-left m-auto">
+            <div class="text-3xl sm:text-4xl text-brandDark">Build a Blog with Eleventy and Tailwind CSS - Part 4 - Eleventy's Filters</div>
+            <div class="flex flex-col xs:flex-row justify-center sm:justify-start text-gray-700">
+                <span class="mx-1">
+                    <span class="inline xs:hidden">Posted on</span>
+                    04 September, 2020</span>
+                <span class="hidden xs:block">·</span>
+                <span class="mx-1">3 mins to read</span>
+                
+                    <span class="hidden xs:block">·</span>
+                    <span class="mx-1">6 mins
+                        to watch</span>
+                
+            </div>
+            
+                <div class="mt-4 sm:mt-8 text-2xl sm:text-3xl italic text-brandLight">
+                    <h3>tl;dw If you prefer a text version keep on reading!</h3>
+                </div>
+            
+            <div class="markdown">
+                <div id="PIMHaaIf7_o" class="eleventy-plugin-youtube-embed"style="position:relative;width:100%;padding-top: 56.25%;"><iframe style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;" width="100%" height="100%" frameborder="0" src="https://www.youtube-nocookie.com/embed/PIMHaaIf7_o" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p>In the previous part of this tutorial we dealt with the styling of our posts. In this one we use Eleventy's filters to process our post's data into more useful information.</p>
+<p>If you want to see what we've done until now, please refer to parts <a href="/posts/build-a-blog-with-eleventy-and-tailwindcss-part-1">1</a>, <a href="/posts/build-a-blog-with-eleventy-and-tailwindcss-part-2">2</a> and <a href="/posts/build-a-blog-with-eleventy-and-tailwindcss-part-3">3</a>.</p>
+<p>In this tutorial we:</p>
+<ul>
+<li><a href="#introduce-eleventy-filters" target="_self">Introduce Eleventy's filters</a></li>
+<li><a href="#format-the-date" target="_self">Format the date</a></li>
+<li><a href="#add-custom-filter" target="_self">Add a custom 'estimated reading time' filter</a></li>
+</ul>
+<p><em>Whenever you see the '$' symbol in front of a command, it's a terminal command.</em></p>
+<h3><span id="introduce-eleventy-filters">Introduce Eleventy's filters<span></h3>
+<p>Template engines can use filters to modify their output tags. There is a number of filters provided by Eleventy, as well as filters provided by each template language.</p>
+<p>The way you use them is the following:</p>
+<pre><code>&lt;p&gt;{{ output | filter }}&lt;/p&gt;
+</code></pre>
+<p>The '|' symbol is called a pipe. It has various uses in different fields. In computing, it is a mechanism originating in Unix systems. It directs the output of one process to the input of another. In our case, it directs the content of the output tag to the filter. The end result is a filtered output.</p>
+<h3><span id="format-the-date">Format the date<span></h3>
+<p>We run</p>
+<pre><code>$ npx eleventy --serve
+</code></pre>
+<p>in the console to get our site running in the localhost.</p>
+<p>This is how our post information is looking at the moment:</p>
+<p><img src="img/blog-1.png" alt="info-without-filters"></p>
+<p>In our post layout file, <code>post.liquid</code>, we are just using the date variable from our post's front matter:</p>
+<pre><code>{{ date }}
+</code></pre>
+<p>so the date is displayed as a timestamp.</p>
+<p>We're going to use Liquid's built-in <code>date</code> filter to convert it to a format that's more human readable. The syntax of the <code>date</code> filter is the same as Ruby's <a href="https://ruby-doc.org/stdlib-2.6.1/libdoc/date/rdoc/DateTime.html#method-i-strftime">strftime</a> method. If you need help producing your desired output, you can use a site like <a href="http://www.strfti.me/">strfti.me</a>.</p>
+<p>We add the date filter like so:</p>
+<pre><code>{{ date | date: &quot;%d %B, %Y&quot; }}
+</code></pre>
+<p><code>%d</code> stands for day of the month, <code>%B</code> for the full month name, and <code>%Y</code> for the year including the century.</p>
+<p>Our date information now looks a bit better.</p>
+<p><img src="img/blog-2.png" alt="info-with-date-filter"></p>
+<h3><span id="add-custom-filter">Add a custom 'estimated reading time' filter<span></h3>
+<p>We also want to add a filter that gives us an estimate of the time needed to read a blog post. As you might imagine, neither Eleventy, nor any template engine (that I know of) has a built-in filter that does that, so we need to add a custom filter.</p>
+<p>Eleventy has template engine specific and universal filters. Both types are added in the Eleventy config file, found in the <code>.eleventy.js</code> file in the root folder of your project. Here we'll go with a universal filter.</p>
+<p>We are assuming that on average it takes someone a minute to read 250 words. So, we want our filter to count the total number of words of a post and divide them by 250, which will give us the minutes that it takes someone to read the post.</p>
+<p>Filters are basically JavaScript methods. Inside the <code>.eleventy.js</code> file we add the following method to the eleventyConfig object:</p>
+<pre><code>eleventyConfig.addFilter(&quot;wordCount&quot;, function (value) {
+    // Function to count words of posts
+    const numOfWords = value.split(/\s+/).length;
+    const WORDS_PER_MINUTE = 250;
+    const minsToRead = Math.round(numOfWords / WORDS_PER_MINUTE);
+    return `${minsToRead} mins to read`;
+  });
+</code></pre>
+<p>The <code>addFilter</code> method adds a universal filter that can be used by all template engines. It takes two parameters. The first one is the name of the filter. In this case, wordCount. The second one is a function. The value of the output is passed to the function as an argument.</p>
+<p>As we'll see later, the value we use is the content of our post as a string.</p>
+<p>The line</p>
+<pre><code>const numOfWords = value.split(/\s+/).length;
+</code></pre>
+<p>uses a regular expression that splits the content of a post on one or more whitespace characters into an array. Using the length attribute of the array, we get the total number of words in the post. We divide that number by 250 and round it to the nearest integer to get our estimated reading time.</p>
+<p>The line</p>
+<pre><code>return `${minsToRead} mins to read`;
+</code></pre>
+<p>returns a string that is the output of our <code>wordCount</code> filter.</p>
+<p>For example, if a post is comprised of 1360 words --&gt; 1360/250 = 5.44 ~= 5 mins and the output of our filter is '5 mins to read'.</p>
+<p>We save the <code>.eleventy.js</code> file and replace the placeholder:</p>
+<pre><code>&lt;span class=&quot;mx-1&quot;&gt;wordCount&lt;/span&gt;
+</code></pre>
+<p>in our <code>post.liquid</code> file</p>
+<p>with:</p>
+<pre><code>&lt;span class=&quot;mx-1&quot;&gt;{{ content | wordCount}}&lt;/span&gt;
+</code></pre>
+<p>We have previously used the <code>content</code> variable in our layout, in order to display our actual content. Here, we just use it as an input to our 'wordCount' filter.</p>
+<p>Our post information now looks like this:</p>
+<p><img src="img/blog-3.png" alt="info-with-all-filters"></p>
+<p>In the next part of the series, we'll introduce Eleventy's collections and pagination, which will help us build the homepage of our blog.</p>
+<p>And that's it!</p>
+<h2>You have now styled your header, footer partials and Eleventy post template with Tailwind CSS!</h2>
+
+            </div>
+        </div>
+        <footer
+  class="flex items-center justify-between bg-brandDark text-gray-100 px-8"
+>
+  <div>
+    <p class="text-sm">
+      Copyright &copy; 2020
+      <span class="font-brand ml-2 text-lg tracking-wider">Stubborn Code</span>
+    </p>
+  </div>
+  <div>
+    <p class="text-xs">Entypo pictograms by Daniel Bruce — www.entypo.com</p>
+  </div>
+</footer>
+
+    </body>
+</html>
