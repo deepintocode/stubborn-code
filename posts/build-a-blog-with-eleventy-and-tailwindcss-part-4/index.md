@@ -134,4 +134,4 @@ In the next part of the series, we'll introduce Eleventy's collections and pagin
 
 And that's it!
 
-## You have now styled your header, footer partials and Eleventy post template with Tailwind CSS!
+## You have now used a built-in and a custom made Eleventy filter!
